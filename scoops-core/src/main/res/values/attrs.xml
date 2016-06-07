@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="BaseScoopAttr">
+
+        <attr name="toolbarTheme" format="reference" />
+        <attr name="toolbarPopupTheme" format="reference" />
+
+        <attr name="fabColor" format="color|reference" />
+        <attr name="fabIconTint" format="color|reference" />
+
+
+    </declare-styleable>
+
+</resources>

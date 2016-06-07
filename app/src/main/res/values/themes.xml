@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Dark  -->
+    <style name="Theme.Scoop" parent="Theme.AppCompat.NoActionBar">
+
+        <!-- Palatte -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlHighlight">@color/colorControlHighlight</item>
+
+        <!-- Theming Elements -->
+        <item name="toolbarTheme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+        <item name="toolbarPopupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+
+    </style>
+
+    <!-- Light -->
+    <style name="Theme.Scoop.Light" parent="Theme.AppCompat.Light.NoActionBar">
+
+        <!-- Palatte -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlHighlight">@color/colorControlHighlight</item>
+
+        <!-- Theming Elements -->
+        <item name="toolbarTheme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+        <item name="toolbarPopupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+
+    </style>
+
+    <!-- Alternate 1 -->
+    <style name="Theme.Scoop.Alt1">
+
+        <!-- Palatte -->
+        <item name="colorPrimary">@color/colorPrimaryAlt1</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkAlt1</item>
+        <item name="colorAccent">@color/colorAccentAlt1</item>
+        <item name="colorControlHighlight">@color/colorControlHighlightAlt1</item>
+
+    </style>
+
+    <!-- Alternate 2 -->
+    <style name="Theme.Scoop.Alt2">
+
+        <!-- Palatte -->
+        <item name="colorPrimary">@color/colorPrimaryAlt2</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkAlt2</item>
+        <item name="colorAccent">@color/colorAccentAlt2</item>
+        <item name="colorControlHighlight">@color/colorControlHighlightAlt2</item>
+
+    </style>
+
+</resources>

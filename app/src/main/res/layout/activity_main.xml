@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ftinc.themeenginetest.MainActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/appbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+
+        app:title="Scoop"
+        android:background="?attr/colorPrimary"
+        android:elevation="6dp"
+        android:theme="?attr/toolbarTheme"
+        app:popupTheme="?attr/toolbarPopupTheme"
+
+        app:layout_constraintLeft_toLeftOf="@+id/activity_main"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintTop_toTopOf="@+id/activity_main"
+        tools:layout_constraintTop_creator="1"
+        app:layout_constraintRight_toRightOf="@+id/activity_main"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintHorizontal_bias="1.0" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView"
+        android:gravity="center"
+        tools:text="Welcome to Scoop!"
+        android:textSize="20sp"
+        android:fontFamily="sans-serif-medium"
+        app:layout_constraintLeft_toLeftOf="@+id/activity_main"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintTop_toBottomOf="@+id/appbar"
+        android:layout_marginTop="16dp"
+        tools:layout_constraintTop_creator="1"
+        app:layout_constraintRight_toRightOf="@+id/activity_main"
+        tools:layout_constraintRight_creator="1" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_water"
+        android:tint="@android:color/white"
+
+        app:layout_constraintRight_toRightOf="@+id/activity_main"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintBottom_toBottomOf="@+id/activity_main"
+        android:layout_marginBottom="16dp"
+        tools:layout_constraintBottom_creator="1" />
+
+    <Button
+        android:layout_width="88dp"
+        android:layout_height="wrap_content"
+
+        android:text="Button"
+        android:id="@+id/button"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        android:layout_marginTop="16dp"
+        tools:layout_constraintTop_creator="1"
+        app:layout_constraintRight_toLeftOf="@+id/button2"
+        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp" />
+
+    <Button style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Colored"
+        android:id="@+id/button2"
+        app:layout_constraintLeft_toLeftOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        android:layout_marginTop="16dp"
+        tools:layout_constraintTop_creator="1"
+        app:layout_constraintRight_toRightOf="@+id/textView" />
+
+    <Button style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Borderless"
+        android:id="@+id/button3"
+        tools:layout_editor_absoluteY="112dp"
+        app:layout_constraintLeft_toRightOf="@+id/button2"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp" />
+
+    <SeekBar
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:max="100"
+        android:progress="20"
+        android:id="@+id/seekBar"
+        app:layout_constraintLeft_toLeftOf="@+id/activity_main"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/button2"
+        android:layout_marginTop="16dp"
+        app:layout_constraintRight_toRightOf="@+id/activity_main"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp" />
+
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Radio Button"
+        android:checked="false"
+        android:id="@+id/radioButton"
+        tools:layout_editor_absoluteY="210dp"
+        app:layout_constraintLeft_toRightOf="@+id/checkBox"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Checkbox"
+        android:checked="false"
+        android:id="@+id/checkBox"
+        tools:layout_editor_absoluteX="47dp"
+        app:layout_constraintTop_toBottomOf="@+id/seekBar"
+        android:layout_marginTop="16dp" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:splitTrack="false"
+        app:layout_constraintLeft_toRightOf="@+id/radioButton"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintTop_toTopOf="@+id/radioButton"
+        app:layout_constraintBottom_toBottomOf="@+id/radioButton" />
+
+    <EditText
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/editText"
+        android:hint="Email Address"
+        app:layout_constraintLeft_toLeftOf="@+id/activity_main"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox"
+        android:layout_marginTop="16dp"
+        app:layout_constraintRight_toRightOf="@+id/activity_main"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp" />
+
+    <EditText
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/editText2"
+        android:hint="Password"
+        app:layout_constraintLeft_toLeftOf="@+id/activity_main"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/editText"
+        android:layout_marginTop="8dp"
+        app:layout_constraintRight_toRightOf="@+id/activity_main"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp" />
+
+
+</android.support.constraint.ConstraintLayout>
