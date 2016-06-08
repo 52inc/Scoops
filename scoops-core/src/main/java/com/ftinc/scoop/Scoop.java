@@ -130,19 +130,6 @@ public class Scoop {
     }
 
     /**
-     * Get the current flavor to apply
-     *
-     * @return      one scoop of ice cream
-     */
-    private Flavor getCurrentFlavor(){
-        int index = getCurrentFlavorIndex();
-        if(index != mDefaultFlavorIndex) {
-            return mFlavors.get(index);
-        }
-        return null;
-    }
-
-    /**
      * Verify the initialization state of the utility
      */
     private void checkInit(){
@@ -162,6 +149,19 @@ public class Scoop {
      */
     public List<Flavor> getFlavors(){
         return Collections.unmodifiableList(mFlavors);
+    }
+
+    /**
+     * Get the current flavor to apply
+     *
+     * @return      one scoop of ice cream
+     */
+    public Flavor getCurrentFlavor(){
+        int index = getCurrentFlavorIndex();
+        if(index != mDefaultFlavorIndex) {
+            return mFlavors.get(index);
+        }
+        return null;
     }
 
     /**
@@ -264,10 +264,9 @@ public class Scoop {
             return this;
         }
 
-        public Scoop build(){
-            Scoop s = Scoop.getInstance();
-            s.initialize(this);
-            return s;
+        public void initialize(){
+            Scoop.getInstance()
+                    .initialize(this);
         }
 
     }

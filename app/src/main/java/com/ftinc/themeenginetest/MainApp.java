@@ -24,7 +24,7 @@ public class MainApp extends Application {
                 .addFlavor("Alternate 1", R.style.Theme_Scoop_Alt1)
                 .addFlavor("Alternate 2", R.style.Theme_Scoop_Alt2)
                 .setSharedPreferences(PreferenceManager.getDefaultSharedPreferences(this))
-                .build();
+                .initialize();
 
     }
 }

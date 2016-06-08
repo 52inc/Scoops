@@ -6,7 +6,7 @@ android {
     buildToolsVersion "23.0.3"
     defaultConfig {
         applicationId "com.ftinc.scoop.example"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"

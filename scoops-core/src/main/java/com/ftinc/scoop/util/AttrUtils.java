@@ -81,4 +81,12 @@ public class AttrUtils {
         return drawable;
     }
 
+    @StyleRes
+    public static int getResourceAttr(Context ctx, @AttrRes int resourceAttrId){
+        TypedArray a = ctx.obtainStyledAttributes(new int[]{resourceAttrId});
+        int resourceId = a.getResourceId(0, -1);
+        a.recycle();
+        return resourceId;
+    }
+
 }

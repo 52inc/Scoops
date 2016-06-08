@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">scoop</string>
+    <string name="activity_settings">Change theme</string>
 </resources>
