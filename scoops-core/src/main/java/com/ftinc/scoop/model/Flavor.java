@@ -23,7 +23,6 @@ public class Flavor {
         mName = name;
         mStyleResource = styleResource;
         mDialogStyleResource = dialogStyleResource;
-
     }
     
     /***********************************************************************************************
