@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">scoop</string>
     <string name="activity_settings">Change theme</string>
+
+    <string name="daynight_auto">auto</string>
+    <string name="daynight_system">system</string>
+    <string name="daynight_off">day</string>
+    <string name="daynight_on">night</string>
 </resources>

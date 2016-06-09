@@ -5,7 +5,13 @@
     <item android:id="@+id/action_settings"
         android:title="@string/action_settings"
         android:icon="@drawable/ic_settings_black_24dp"
+
         app:showAsAction="always"
         />
+
+    <item android:title="Bacon 1" />
+    <item android:title="Bacon 2" />
+    <item android:title="Bacon 3" />
+    <item android:title="Bacon 4" />
 
 </menu>

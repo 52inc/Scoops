@@ -11,18 +11,36 @@ import android.support.annotation.StyleRes;
  */
 public class Flavor {
 
+    /***********************************************************************************************
+     *
+     * Variables
+     *
+     */
+
     private final String mName;
     private final int mStyleResource;
     private final int mDialogStyleResource;
+    private final boolean mIsDayNight;
+
+    /***********************************************************************************************
+     *
+     * Constructors
+     *
+     */
 
     public Flavor(String name, int styleResource){
         this(name, styleResource, -1);
     }
 
     public Flavor(String name, int styleResource, int dialogStyleResource){
+        this(name, styleResource, dialogStyleResource, false);
+    }
+
+    public Flavor(String name, int styleResource, int dialogStyleResource, boolean isDayNight){
         mName = name;
         mStyleResource = styleResource;
         mDialogStyleResource = dialogStyleResource;
+        mIsDayNight = isDayNight;
     }
     
     /***********************************************************************************************
@@ -44,11 +62,15 @@ public class Flavor {
     public int getDialogStyleResource(){
         return mDialogStyleResource;
     }
-    
+
+    public boolean isDayNight() {
+        return mIsDayNight;
+    }
+
     /***********************************************************************************************
-     * 
+     *
      * Base Methods
-     * 
+     *
      */
 
     @Override
@@ -57,6 +79,7 @@ public class Flavor {
                 "mName='" + mName + '\'' +
                 ", mStyleResource=" + mStyleResource +
                 ", mDialogStyleResource=" + mDialogStyleResource +
+                ", mIsDayNight=" + mIsDayNight +
                 '}';
     }
 
@@ -69,6 +92,7 @@ public class Flavor {
 
         if (mStyleResource != flavor.mStyleResource) return false;
         if (mDialogStyleResource != flavor.mDialogStyleResource) return false;
+        if (mIsDayNight != flavor.mIsDayNight) return false;
         return mName != null ? mName.equals(flavor.mName) : flavor.mName == null;
 
     }
@@ -78,6 +102,7 @@ public class Flavor {
         int result = mName != null ? mName.hashCode() : 0;
         result = 31 * result + mStyleResource;
         result = 31 * result + mDialogStyleResource;
+        result = 31 * result + (mIsDayNight ? 1 : 0);
         return result;
     }
 }

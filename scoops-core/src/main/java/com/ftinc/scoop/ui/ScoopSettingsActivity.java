@@ -68,11 +68,23 @@ public class ScoopSettingsActivity extends AppCompatActivity implements FlavorRe
 
     private String mTitle;
 
+    /***********************************************************************************************
+     *
+     * Lifecycle Methods
+     *
+     */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Apply the current flavor of ice cream
+        Scoop.getInstance().apply(this);
+
+        // Set the activity content
         setContentView(R.layout.activity_scoop_settings);
 
+        // Setup UI
         parseExtras(savedInstanceState);
         setupActionBar();
         setupRecyclerView();
@@ -93,6 +105,12 @@ public class ScoopSettingsActivity extends AppCompatActivity implements FlavorRe
         return super.onOptionsItemSelected(item);
     }
 
+    /***********************************************************************************************
+     *
+     * Helper Methods
+     *
+     */
+
     private void parseExtras(Bundle savedInstanceState) {
         if(getIntent() != null){
             mTitle = getIntent().getStringExtra(EXTRA_TITLE);
@@ -108,12 +126,6 @@ public class ScoopSettingsActivity extends AppCompatActivity implements FlavorRe
         if(getSupportActionBar() == null){
             mAppBar = (Toolbar) findViewById(R.id.appbar);
             setSupportActionBar(mAppBar);
-
-            int toolbarPopupTheme = AttrUtils.getResourceAttr(this, R.attr.toolbarPopupTheme);
-            mAppBar.setPopupTheme(toolbarPopupTheme);
-
-            int colorPrimary = AttrUtils.getColorAttr(this, R.attr.colorPrimary);
-            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(colorPrimary));
 
             mAppBar.setVisibility(View.VISIBLE);
             mAppBar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -146,6 +158,12 @@ public class ScoopSettingsActivity extends AppCompatActivity implements FlavorRe
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
+    /***********************************************************************************************
+     *
+     * Listener Methods
+     *
+     */
+
     @Override
     public void onItemClicked(View view, Flavor item, int position) {
 
@@ -157,6 +175,7 @@ public class ScoopSettingsActivity extends AppCompatActivity implements FlavorRe
 
         // Restart this activity
         Intent restart = new Intent(this, ScoopSettingsActivity.class);
+        setResult(RESULT_OK);
         finish();
         startActivity(restart);
         overridePendingTransition(0, 0);

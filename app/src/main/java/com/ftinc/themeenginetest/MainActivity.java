@@ -2,34 +2,35 @@ package com.ftinc.themeenginetest;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.view.menu.MenuItemImpl;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.RadioGroup;
 
 import com.ftinc.scoop.Scoop;
-import com.ftinc.scoop.model.Flavor;
-import com.ftinc.scoop.ui.FlavorRecyclerAdapter;
 import com.ftinc.scoop.ui.ScoopSettingsActivity;
 import com.ftinc.scoop.util.AttrUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import timber.log.Timber;
 
-public class MainActivity extends AppCompatActivity implements FlavorRecyclerAdapter.OnItemClickListener {
+public class MainActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener {
+
+    private static final int RC_CHANGE_THEME = 0;
 
     @BindView(R.id.appbar)
     Toolbar mAppBar;
 
-    @BindView(R.id.recyclerView)
-    RecyclerView mRecyclerView;
+    @BindView(R.id.daynight_group)
+    RadioGroup mDayNightGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,13 +49,32 @@ public class MainActivity extends AppCompatActivity implements FlavorRecyclerAda
         // Setup Toolbar
         setSupportActionBar(mAppBar);
 
-        // Setup Recycler
-        FlavorRecyclerAdapter adapter = new FlavorRecyclerAdapter(this);
-        adapter.addAll(Scoop.getInstance().getFlavors());
-        adapter.setItemClickListener(this);
+        int nightMode = AppCompatDelegate.getDefaultNightMode();
+        switch (nightMode){
+            case AppCompatDelegate.MODE_NIGHT_AUTO:
+                mDayNightGroup.check(R.id.daynight_auto);
+                break;
+            case AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM:
+                mDayNightGroup.check(R.id.daynight_system);
+                break;
+            case AppCompatDelegate.MODE_NIGHT_NO:
+                mDayNightGroup.check(R.id.daynight_day);
+                break;
+            case AppCompatDelegate.MODE_NIGHT_YES:
+                mDayNightGroup.check(R.id.daynight_night);
+                break;
+        }
 
-        mRecyclerView.setAdapter(adapter);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mDayNightGroup.setVisibility(Scoop.getInstance().getCurrentFlavor().isDayNight() ? View.VISIBLE : View.GONE);
+        mDayNightGroup.setOnCheckedChangeListener(this);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK && requestCode == RC_CHANGE_THEME){
+            recreate();
+        }
     }
 
     @Override
@@ -65,31 +85,17 @@ public class MainActivity extends AppCompatActivity implements FlavorRecyclerAda
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        MenuItem settings = menu.findItem(R.id.action_settings);
-        settings.getIcon().setTint(AttrUtils.getColorAttr(this, android.R.attr.textColorPrimary));
+        Scoop.getInstance().apply(this, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.action_settings){
-            startActivity(ScoopSettingsActivity.createIntent(this));
+            startActivityForResult(ScoopSettingsActivity.createIntent(this), RC_CHANGE_THEME);
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onItemClicked(View view, Flavor item, int position) {
-
-        // Update your scoop of ice cream
-        Scoop.getInstance().choose(item);
-
-        // Restart activity
-        Intent restart = new Intent(this, MainActivity.class);
-        restart.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(restart);
-        overridePendingTransition(0, 0);
     }
 
     @OnClick(R.id.fab)
@@ -110,5 +116,33 @@ public class MainActivity extends AppCompatActivity implements FlavorRecyclerAda
                     }
                 })
                 .show();
+    }
+
+    private void restart(){
+        // Restart activity
+        Intent restart = new Intent(this, MainActivity.class);
+        restart.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(restart);
+        overridePendingTransition(0, 0);
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        switch (checkedId){
+            case R.id.daynight_auto:
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
+                break;
+            case R.id.daynight_system:
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                break;
+            case R.id.daynight_day:
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                break;
+            case R.id.daynight_night:
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                break;
+        }
+
+        recreate();
     }
 }

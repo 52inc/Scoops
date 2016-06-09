@@ -9,6 +9,8 @@
         <attr name="fabColor" format="color|reference" />
         <attr name="fabIconTint" format="color|reference" />
 
+        <attr name="toolbarItemTint" format="reference|color" />
+
 
     </declare-styleable>
 

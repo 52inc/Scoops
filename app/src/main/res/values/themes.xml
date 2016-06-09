@@ -13,6 +13,7 @@
         <!-- Theming Elements -->
         <item name="toolbarTheme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
         <item name="toolbarPopupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+        <item name="toolbarItemTint">#fff</item>
 
     </style>
 
@@ -28,6 +29,23 @@
         <!-- Theming Elements -->
         <item name="toolbarTheme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
         <item name="toolbarPopupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+        <item name="toolbarItemTint">#fff</item>
+
+    </style>
+
+    <!-- DayNight -->
+    <style name="Theme.Scoop.DayNight" parent="Theme.AppCompat.DayNight.NoActionBar">
+
+        <!-- Palatte -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlHighlight">@color/colorControlHighlight</item>
+
+        <!-- Theming Elements -->
+        <item name="toolbarTheme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+        <item name="toolbarPopupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+        <item name="toolbarItemTint">#fff</item>
 
     </style>
 
