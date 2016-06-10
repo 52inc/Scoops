@@ -1,10 +1,14 @@
-# Scoops
+<img src="art/web_hi_res_512.png" width="190" align="right" hspace="20" />
+
+Scoops
+======
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.52inc/scoops/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.52inc/scoops)
 
 Android library for managing and applying multiple defined `R.style.Theme....` themes at runtime for dyanically changing the look and feel of your application
 
 ---
+## Demo
 
 ![demo gif](http://i.imgur.com/5SqjbhL.gif)
 
