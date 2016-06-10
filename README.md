@@ -13,7 +13,7 @@ Add this line to your gradle/dependencies group:
 compile 'com.52inc:scoops:0.1.0'
 ```
 
-Then you will need to initialize the single ton in your `Application` subclass like this:
+Then you will need to initialize the singleton in your `Application` subclass like this:
 
 ```java
 Scoop.waffleCone()
