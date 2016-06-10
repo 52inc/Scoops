@@ -5,13 +5,16 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.support.annotation.ColorInt;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.ftinc.scoop.Scoop;
 import com.ftinc.scoop.model.Flavor;
 
 import com.ftinc.scoop.R;
@@ -128,7 +131,7 @@ public class FlavorRecyclerAdapter extends RecyclerView.Adapter<FlavorRecyclerAd
      *
      */
 
-    static class FlavorViewHolder extends RecyclerView.ViewHolder{
+    static class FlavorViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         static FlavorViewHolder create(LayoutInflater inflater, ViewGroup parent){
             View view = inflater.inflate(R.layout.item_layout_flavor, parent, false);
@@ -138,6 +141,8 @@ public class FlavorRecyclerAdapter extends RecyclerView.Adapter<FlavorRecyclerAd
         TextView mTitle;
         ImageView mPrimary, mDark, mAccent;
         ImageView mIndicator;
+        ViewGroup mOptionsGroup;
+        Button mOptAuto, mOptSystem, mOptOff, mOptOn;
 
         FlavorViewHolder(View itemView) {
             super(itemView);
@@ -146,6 +151,12 @@ public class FlavorRecyclerAdapter extends RecyclerView.Adapter<FlavorRecyclerAd
             mDark = (ImageView) itemView.findViewById(R.id.primaryColorDark);
             mAccent = (ImageView) itemView.findViewById(R.id.accentColor);
             mIndicator = (ImageView) itemView.findViewById(R.id.indicator);
+
+            mOptionsGroup = (ViewGroup) itemView.findViewById(R.id.daynight_options);
+            mOptAuto = (Button) mOptionsGroup.findViewById(R.id.opt_auto);
+            mOptSystem = (Button) mOptionsGroup.findViewById(R.id.opt_system);
+            mOptOff = (Button) mOptionsGroup.findViewById(R.id.opt_off);
+            mOptOn = (Button) mOptionsGroup.findViewById(R.id.opt_on);
         }
 
         void bind(Flavor flavor, boolean isCurrentFlavor){
@@ -163,6 +174,12 @@ public class FlavorRecyclerAdapter extends RecyclerView.Adapter<FlavorRecyclerAd
 
             // Set indicator visibility
             mIndicator.setVisibility(isCurrentFlavor ? View.VISIBLE : View.GONE);
+            mOptionsGroup.setVisibility(flavor.isDayNight() && isCurrentFlavor ? View.VISIBLE : View.GONE);
+
+            // Set the current option as selected
+            int mode = Scoop.getInstance().getDayNightMode();
+            bindOptions(mode);
+
         }
 
         ShapeDrawable generateDrawable(@ColorInt int color){
@@ -171,6 +188,39 @@ public class FlavorRecyclerAdapter extends RecyclerView.Adapter<FlavorRecyclerAd
             d.setIntrinsicHeight(Utils.dipToPx(itemView.getContext(), 24));
             d.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
             return d;
+        }
+
+        void checkMode(Button btn, int mode, int desired){
+            int color = AttrUtils.getColorAttr(itemView.getContext(), mode == desired ? R.attr.colorAccent : android.R.attr.textColorPrimary);
+            btn.setTextColor(color);
+            btn.setOnClickListener(this);
+        }
+
+        void bindOptions(int mode){
+            checkMode(mOptAuto, mode, AppCompatDelegate.MODE_NIGHT_AUTO);
+            checkMode(mOptSystem, mode, AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+            checkMode(mOptOff, mode, AppCompatDelegate.MODE_NIGHT_NO);
+            checkMode(mOptOn, mode, AppCompatDelegate.MODE_NIGHT_YES);
+        }
+
+        @SuppressWarnings("WrongConstant")
+        @Override
+        public void onClick(View v) {
+            int i = v.getId();
+            int mode = 0;
+            if (i == R.id.opt_auto) {
+                mode = AppCompatDelegate.MODE_NIGHT_AUTO;
+            } else if (i == R.id.opt_system) {
+                mode = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
+            } else if (i == R.id.opt_off) {
+                mode = AppCompatDelegate.MODE_NIGHT_NO;
+            } else if (i == R.id.opt_on) {
+                mode = AppCompatDelegate.MODE_NIGHT_YES;
+            }
+
+            AppCompatDelegate.setDefaultNightMode(mode);
+            Scoop.getInstance().chooseDayNightMode(mode);
+            bindOptions(mode);
         }
     }
 

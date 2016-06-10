@@ -16,10 +16,6 @@ import timber.log.Timber;
 
 public class MainApp extends Application {
 
-    static{
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
-    }
-
     @Override
     public void onCreate() {
         super.onCreate();

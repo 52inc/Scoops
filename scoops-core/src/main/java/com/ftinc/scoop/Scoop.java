@@ -142,16 +142,6 @@ public class Scoop {
     }
 
     /**
-     * Get the selected day night mode to use with certain themes
-     *
-     * @return      the day night mode to use
-     */
-    private int getDayNightMode(){
-        checkInit();
-        return mPreferences.getInt(PREFERENCE_DAYNIGHT_KEY, AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-    }
-
-    /**
      * Get the current selected scoop of flavor
      *
      * @param excludeDefault        whether or not to return null if the current selected is the default theme
@@ -179,6 +169,17 @@ public class Scoop {
      */
 
     /**
+     * Get the selected day night mode to use with certain themes
+     *
+     * @return      the day night mode to use
+     */
+    @AppCompatDelegate.NightMode
+    public int getDayNightMode(){
+        checkInit();
+        return mPreferences.getInt(PREFERENCE_DAYNIGHT_KEY, AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+    }
+
+    /**
      * Get the list of available flavors that you can scoop from
      *
      * @return
@@ -201,9 +202,15 @@ public class Scoop {
      *
      * @param activity      the activity to apply the selected theme configuration to
      */
+    @SuppressWarnings("WrongConstant")
     public void apply(Activity activity){
         Flavor flavor = getCurrentFlavor(true);
         if(flavor != null){
+            // Apply DayNight mode setting if applicable
+            if(flavor.isDayNight()){
+                AppCompatDelegate.setDefaultNightMode(getDayNightMode());
+            }
+
             // Apply theme
             apply(activity, flavor.getStyleResource());
         }
@@ -215,9 +222,15 @@ public class Scoop {
      *
      * @param activity      the activity to apply the dialog theme to
      */
+    @SuppressWarnings("WrongConstant")
     public void applyDialog(Activity activity){
         Flavor flavor = getCurrentFlavor(true);
         if(flavor != null && flavor.getDialogStyleResource() > -1){
+            // Apply DayNight mode setting if applicable
+            if(flavor.isDayNight()){
+                AppCompatDelegate.setDefaultNightMode(getDayNightMode());
+            }
+
             // Apply theme
             apply(activity, flavor.getDialogStyleResource());
         }
