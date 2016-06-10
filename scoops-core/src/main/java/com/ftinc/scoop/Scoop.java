@@ -54,8 +54,8 @@ public class Scoop {
      *
      */
 
-    private static final String PREFERENCE_FLAVOR_KEY = "com.ftinc.scoop.preference.FLAVOR_KEY";
-    private static final String PREFERENCE_DAYNIGHT_KEY = "com.ftinc.scoop.preference.DAY_NIGHT_KEY";
+    static final String PREFERENCE_FLAVOR_KEY = "com.ftinc.scoop.preference.FLAVOR_KEY";
+    static final String PREFERENCE_DAYNIGHT_KEY = "com.ftinc.scoop.preference.DAY_NIGHT_KEY";
 
     /***********************************************************************************************
      *
