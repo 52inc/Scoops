@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize"
 
-        app:title="Scoop"
+        app:title="Scoops"
         android:background="?attr/colorPrimary"
         android:elevation="6dp"
         android:theme="?attr/toolbarTheme"
@@ -26,17 +26,15 @@
         app:layout_constraintLeft_toLeftOf="@+id/activity_main"
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintTop_toTopOf="@+id/activity_main"
-        tools:layout_constraintTop_creator="1"
         app:layout_constraintRight_toRightOf="@+id/activity_main"
         tools:layout_constraintRight_creator="1" />
 
     <TextView
-        android:text="TextView"
+        android:text="Welcome to Scoops!"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:id="@+id/textView"
         android:gravity="center"
-        tools:text="Welcome to Scoop!"
         android:textSize="20sp"
         android:fontFamily="sans-serif-medium"
         app:layout_constraintLeft_toLeftOf="@+id/activity_main"
@@ -65,7 +63,7 @@
         android:text="Button"
         android:id="@+id/button"
         app:layout_constraintLeft_toLeftOf="@+id/activity_main"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         app:layout_constraintTop_toBottomOf="@+id/textView"
         android:layout_marginTop="8dp" />
 
@@ -84,10 +82,10 @@
         android:layout_height="wrap_content"
         android:id="@+id/switch1"
         android:switchPadding="8dp"
-        app:layout_constraintLeft_toRightOf="@+id/button2"
-        android:layout_marginStart="8dp"
-        app:layout_constraintTop_toTopOf="@+id/button2"
-        app:layout_constraintBottom_toBottomOf="@+id/button2" />
+        app:layout_constraintLeft_toLeftOf="@+id/activity_main"
+        android:layout_marginStart="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/button2"
+        android:layout_marginTop="24dp" />
 
     <CheckBox
         android:text="CheckBox"
@@ -96,52 +94,63 @@
         android:id="@+id/checkBox"
         app:layout_constraintLeft_toRightOf="@+id/switch1"
         android:layout_marginStart="8dp"
-        app:layout_constraintTop_toTopOf="@+id/switch1"
-        app:layout_constraintBottom_toBottomOf="@+id/switch1" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/switch1" />
 
-    <RadioGroup
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:id="@+id/daynight_group"
+    <RatingBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ratingBar2"
+        android:rating="2.5"
+        android:stepSize=".5"
+        android:numStars="5"
         app:layout_constraintLeft_toLeftOf="@+id/activity_main"
         android:layout_marginStart="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/button"
-        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox"
+        android:layout_marginTop="16dp"
         app:layout_constraintRight_toRightOf="@+id/activity_main"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/activity_main"
-        android:layout_marginBottom="16dp">
+        android:layout_marginEnd="16dp" />
 
-        <RadioButton
-            android:text="Auto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:id="@+id/daynight_auto"/>
+    <SeekBar
+        android:layout_width="0dp"
+        android:layout_height="18dp"
+        android:id="@+id/seekBar"
+        android:progress="25"
+        app:layout_constraintLeft_toLeftOf="@+id/activity_main"
+        android:layout_marginStart="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/ratingBar2"
+        android:layout_marginTop="16dp"
+        app:layout_constraintRight_toRightOf="@+id/activity_main"
+        android:layout_marginEnd="16dp" />
 
-        <RadioButton
-            android:text="System"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:id="@+id/daynight_system" />
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="76dp"
+        android:layout_height="76dp"
+        android:id="@+id/progressBar"
+        app:layout_constraintLeft_toLeftOf="@+id/seekBar"
+        app:layout_constraintTop_toBottomOf="@+id/seekBar"
+        android:layout_marginTop="32dp"
+        app:layout_constraintRight_toRightOf="@+id/seekBar" />
 
-        <RadioButton
-            android:text="Day"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:id="@+id/daynight_day" />
+    <ToggleButton
+        android:text="ToggleButton"
+        android:layout_width="88dp"
+        android:layout_height="48dp"
+        android:id="@+id/toggleButton"
+        app:layout_constraintLeft_toRightOf="@+id/button2"
+        android:layout_marginStart="8dp"
+        app:layout_constraintTop_toTopOf="@+id/button2"
+        app:layout_constraintBottom_toBottomOf="@+id/button2"
+        app:layout_constraintVertical_bias="0.0" />
 
-        <RadioButton
-            android:text="Night"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:id="@+id/daynight_night" />
-
-
-    </RadioGroup>
+    <RadioButton
+        android:text="RadioButton"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:id="@+id/radioButton"
+        app:layout_constraintLeft_toRightOf="@+id/checkBox"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/checkBox" />
 
 
 </android.support.constraint.ConstraintLayout>

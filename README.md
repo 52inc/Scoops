@@ -4,6 +4,10 @@
 
 Android library for managing and applying multiple defined `R.style.Theme....` themes at runtime for dyanically changing the look and feel of your application
 
+---
+
+![demo gif](http://i.imgur.com/5SqjbhL.gif)
+
 --- 
 ## Installation
 
