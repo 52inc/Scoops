@@ -30,7 +30,7 @@ public class MainApp extends Application {
                 .setSharedPreferences(PreferenceManager.getDefaultSharedPreferences(this))
                 .initialize();
 
-        // Plang the logger
+        // Plant the logger
         Timber.plant(new Timber.DebugTree());
 
     }
