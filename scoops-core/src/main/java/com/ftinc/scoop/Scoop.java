@@ -254,13 +254,13 @@ public class Scoop {
     /**
      * Apply the attributed menu item tint to all the icons if the attribute {@link R.attr#toolbarItemTint}
      *
-     * @param activity      the application context to derive the attr color from
+     * @param context      the application context to derive the attr color from
      * @param menu          the menu to apply to
      */
-    public void apply(Activity activity, Menu menu){
+    public void apply(Context context, Menu menu){
         Flavor flavor = getCurrentFlavor();
         if(menu != null && menu.size() > 0 && flavor != null){
-            int tint = AttrUtils.getColorAttr(activity, flavor.getStyleResource(), R.attr.toolbarItemTint);
+            int tint = AttrUtils.getColorAttr(context, flavor.getStyleResource(), R.attr.toolbarItemTint);
             for (int i = 0; i < menu.size(); i++) {
                 MenuItem item = menu.getItem(i);
                 Drawable icon = item.getIcon();
