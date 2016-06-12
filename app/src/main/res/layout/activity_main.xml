@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
@@ -13,7 +13,7 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/appbar"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize"
 
@@ -23,78 +23,99 @@
         android:theme="?attr/toolbarTheme"
         app:popupTheme="?attr/toolbarPopupTheme"
 
-        app:layout_constraintLeft_toLeftOf="@+id/activity_main"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintTop_toTopOf="@+id/activity_main"
-        app:layout_constraintRight_toRightOf="@+id/activity_main"
-        tools:layout_constraintRight_creator="1" />
+        />
 
     <TextView
         android:text="Welcome to Scoops!"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/textView"
         android:gravity="center"
         android:textSize="20sp"
         android:fontFamily="sans-serif-medium"
-        app:layout_constraintLeft_toLeftOf="@+id/activity_main"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintTop_toBottomOf="@+id/appbar"
+        android:layout_below="@+id/appbar"
         android:layout_marginTop="16dp"
-        app:layout_constraintRight_toRightOf="@+id/activity_main"
-        tools:layout_constraintRight_creator="1" />
+        />
 
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/button_group"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_water"
-        android:tint="@android:color/white"
-        android:id="@+id/fab"
+        android:orientation="horizontal"
+        android:layout_below="@+id/textView"
+        android:gravity="center"
+        android:layout_marginTop="16dp"
+        >
 
-        app:layout_constraintRight_toRightOf="@+id/activity_main"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/activity_main"
-        android:layout_marginBottom="16dp" />
+        <Button
+            android:layout_width="88dp"
+            android:layout_height="wrap_content"
 
-    <Button
-        android:layout_width="88dp"
-        android:layout_height="wrap_content"
+            android:text="Button"
+            android:id="@+id/button"
+            />
 
-        android:text="Button"
-        android:id="@+id/button"
-        app:layout_constraintLeft_toLeftOf="@+id/activity_main"
-        android:layout_marginStart="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        android:layout_marginTop="8dp" />
+        <Button style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Colored"
+                android:id="@+id/button2"
+            />
 
-    <Button style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Colored"
-        android:id="@+id/button2"
-        app:layout_constraintLeft_toRightOf="@+id/button"
-        android:layout_marginStart="8dp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/button" />
+        <ToggleButton
+            android:text="ToggleButton"
+            android:layout_width="88dp"
+            android:layout_height="48dp"
+            android:id="@+id/toggleButton"
+            />
 
-    <Switch
-        android:text="Switch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/switch1"
-        android:switchPadding="8dp"
-        app:layout_constraintLeft_toLeftOf="@+id/activity_main"
-        android:layout_marginStart="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/button2"
-        android:layout_marginTop="24dp" />
 
-    <CheckBox
-        android:text="CheckBox"
-        android:layout_width="96dp"
-        android:layout_height="34dp"
-        android:id="@+id/checkBox"
-        app:layout_constraintLeft_toRightOf="@+id/switch1"
-        android:layout_marginStart="8dp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/switch1" />
+    </LinearLayout>
+
+   <LinearLayout
+       android:id="@+id/options_group"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="horizontal"
+       android:layout_below="@+id/button_group"
+       android:gravity="center"
+       android:layout_marginTop="16dp"
+       >
+
+       <Switch
+           android:text="Switch"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:id="@+id/switch1"
+           android:switchPadding="8dp"
+           />
+
+       <CheckBox
+           android:text="CheckBox"
+           android:layout_width="96dp"
+           android:layout_height="34dp"
+           android:id="@+id/checkBox"
+           />
+
+       <RadioButton
+           android:text="RadioButton"
+           android:layout_width="wrap_content"
+           android:layout_height="32dp"
+           android:id="@+id/radioButton"
+           />
+
+   </LinearLayout>
+
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="18dp"
+        android:id="@+id/seekBar"
+        android:progress="25"
+        android:layout_below="@+id/options_group"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        />
 
     <RatingBar
         android:layout_width="wrap_content"
@@ -103,54 +124,32 @@
         android:rating="2.5"
         android:stepSize=".5"
         android:numStars="5"
-        app:layout_constraintLeft_toLeftOf="@+id/activity_main"
-        android:layout_marginStart="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/checkBox"
-        android:layout_marginTop="16dp"
-        app:layout_constraintRight_toRightOf="@+id/activity_main"
-        android:layout_marginEnd="16dp" />
 
-    <SeekBar
-        android:layout_width="0dp"
-        android:layout_height="18dp"
-        android:id="@+id/seekBar"
-        android:progress="25"
-        app:layout_constraintLeft_toLeftOf="@+id/activity_main"
-        android:layout_marginStart="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/ratingBar2"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/seekBar"
         android:layout_marginTop="16dp"
-        app:layout_constraintRight_toRightOf="@+id/activity_main"
-        android:layout_marginEnd="16dp" />
+        />
 
     <ProgressBar
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="76dp"
         android:layout_height="76dp"
         android:id="@+id/progressBar"
-        app:layout_constraintLeft_toLeftOf="@+id/seekBar"
-        app:layout_constraintTop_toBottomOf="@+id/seekBar"
-        android:layout_marginTop="32dp"
-        app:layout_constraintRight_toRightOf="@+id/seekBar" />
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/ratingBar2"
+        android:layout_marginTop="16dp"
+        />
 
-    <ToggleButton
-        android:text="ToggleButton"
-        android:layout_width="88dp"
-        android:layout_height="48dp"
-        android:id="@+id/toggleButton"
-        app:layout_constraintLeft_toRightOf="@+id/button2"
-        android:layout_marginStart="8dp"
-        app:layout_constraintTop_toTopOf="@+id/button2"
-        app:layout_constraintBottom_toBottomOf="@+id/button2"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <RadioButton
-        android:text="RadioButton"
+    <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
-        android:layout_height="32dp"
-        android:id="@+id/radioButton"
-        app:layout_constraintLeft_toRightOf="@+id/checkBox"
-        android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/checkBox" />
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_water"
+        android:tint="@android:color/white"
+        android:id="@+id/fab"
 
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="16dp"
+        />
 
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>
