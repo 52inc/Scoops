@@ -3,7 +3,7 @@
 Scoops
 ======
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.52inc/scoops/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.52inc/scoops)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.52inc/scoops/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.52inc/scoops) [![Build Status](https://travis-ci.org/52inc/Scoops.svg?branch=master)](https://travis-ci.org/52inc/Scoops)
 
 Android library for managing and applying multiple defined `R.style.Theme....` themes at runtime for dyanically changing the look and feel of your application
 
