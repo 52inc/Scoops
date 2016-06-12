@@ -19,6 +19,8 @@ public class ScoopsActivityTestRule<T extends Activity> extends ActivityTestRule
 
     private static final String PREFERENCE_NAME = "ScoopSettingsActivityTest_prefs";
 
+    private SharedPreferences mSharedPrefs;
+
     public ScoopsActivityTestRule(Class<T> activityClass) {
         super(activityClass);
     }
@@ -28,7 +30,7 @@ public class ScoopsActivityTestRule<T extends Activity> extends ActivityTestRule
         Context ctx = InstrumentationRegistry.getInstrumentation()
                 .getTargetContext();
 
-        SharedPreferences prefs = ctx.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE);
+        mSharedPrefs = ctx.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE);
 
         // Initialize Scoop
         Scoop.waffleCone()
@@ -37,7 +39,11 @@ public class ScoopsActivityTestRule<T extends Activity> extends ActivityTestRule
                 .addDayNightFlavor("DayNight", R.style.Theme_Scoop_DayNight)
                 .addFlavor("Alternate 1", R.style.Theme_Scoop_Alt1)
                 .addFlavor("Alternate 2", R.style.Theme_Scoop_Alt2)
-                .setSharedPreferences(prefs)
+                .setSharedPreferences(mSharedPrefs)
                 .initialize();
+    }
+
+    public SharedPreferences getSharedPrefs(){
+        return mSharedPrefs;
     }
 }

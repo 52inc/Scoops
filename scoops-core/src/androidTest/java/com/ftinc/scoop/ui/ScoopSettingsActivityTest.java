@@ -35,6 +35,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.ftinc.scoop.util.TestUtils.withRecyclerView;
 import static com.ftinc.scoop.util.TestUtils.withTextColor;
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.*;
 
@@ -73,26 +74,29 @@ public class ScoopSettingsActivityTest {
     @Test
     public void test_DayNightModeChange(){
 
-        int defaultViewId = viewForNightMode(Scoop.getInstance().getDayNightMode());
-
         // Select the daynight position item
         onView(withId(R.id.recycler)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(2, click()));
 
-        // Verify that the default option is the correct text color
-        int properColor = AttrUtils.getColorAttr(mActivityRule.getActivity(), R.attr.colorAccent);
-        onView(withRecyclerView(R.id.recycler).atPositionOnView(2, defaultViewId))
-                .check(matches(withTextColor(properColor)));
+        onView(withRecyclerView(R.id.recycler).atPositionOnView(2, R.id.opt_auto))
+                .perform(click());
 
-        // Now select different option
+        assertThat(Scoop.getInstance().getDayNightMode(), is(AppCompatDelegate.MODE_NIGHT_AUTO));
+
+        onView(withRecyclerView(R.id.recycler).atPositionOnView(2, R.id.opt_system))
+                .perform(click());
+
+        assertThat(Scoop.getInstance().getDayNightMode(), is(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM));
+
+        onView(withRecyclerView(R.id.recycler).atPositionOnView(2, R.id.opt_off))
+                .perform(click());
+
+        assertThat(Scoop.getInstance().getDayNightMode(), is(AppCompatDelegate.MODE_NIGHT_NO));
+
         onView(withRecyclerView(R.id.recycler).atPositionOnView(2, R.id.opt_on))
                 .perform(click());
 
-        // Now verify that the new option has the correct color, and the old one doesnt
-        onView(withRecyclerView(R.id.recycler).atPositionOnView(2, R.id.opt_on))
-                .check(matches(withTextColor(properColor)));
-        onView(withRecyclerView(R.id.recycler).atPositionOnView(2, defaultViewId))
-                .check(matches(not(withTextColor(properColor))));
+        assertThat(Scoop.getInstance().getDayNightMode(), is(AppCompatDelegate.MODE_NIGHT_YES));
 
     }
 
@@ -100,30 +104,6 @@ public class ScoopSettingsActivityTest {
         onView(withRecyclerView(R.id.recycler)
                 .atPositionOnView(position, R.id.title))
                 .check(matches(withText(expectedText)));
-    }
-
-    @ColorInt
-    private int color(@ColorRes int resId){
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            return mActivityRule.getActivity().getColor(resId);
-        }else{
-            return mActivityRule.getActivity().getResources().getColor(resId);
-        }
-    }
-
-    private static int viewForNightMode(int nightMode){
-        switch (nightMode){
-            case AppCompatDelegate.MODE_NIGHT_AUTO:
-                return R.id.opt_auto;
-            case AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM:
-                return R.id.opt_system;
-            case AppCompatDelegate.MODE_NIGHT_NO:
-                return R.id.opt_off;
-            case AppCompatDelegate.MODE_NIGHT_YES:
-                return R.id.opt_on;
-            default:
-                return R.id.opt_system;
-        }
     }
 
 }
