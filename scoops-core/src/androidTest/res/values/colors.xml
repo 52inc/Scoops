@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorControlHighlight">#00BCD4</color>
+
+    <color name="colorPrimaryAlt1">#673AB7</color>
+    <color name="colorPrimaryDarkAlt1">#512DA8</color>
+    <color name="colorAccentAlt1">#00BCD4</color>
+    <color name="colorControlHighlightAlt1">#FFEB3B</color>
+
+    <color name="colorPrimaryAlt2">#607D8B</color>
+    <color name="colorPrimaryDarkAlt2">#455A64</color>
+    <color name="colorAccentAlt2">#FFC107</color>
+    <color name="colorControlHighlightAlt2">#03A9F4</color>
+
+</resources>

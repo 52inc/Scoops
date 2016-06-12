@@ -40,32 +40,44 @@ public class ScoopTest {
     @Mock
     SharedPreferences mMockSharedPreferences;
 
+    @Mock
+    SharedPreferences.Editor mMockSharedPreferencesEditor;
+
     @Before
     public void setUp() throws Exception {
 
         when(mMockSharedPreferences.getInt(eq(Scoop.PREFERENCE_DAYNIGHT_KEY), anyInt()))
                 .thenReturn(NIGHT_MODE);
 
-    }
+        when(mMockSharedPreferences.getInt(eq(Scoop.PREFERENCE_FLAVOR_KEY), anyInt()))
+                .thenReturn(1);
 
-    @Test
-    public void getDayNightMode() throws Exception {
+        when(mMockSharedPreferencesEditor.commit())
+                .thenReturn(true);
+
+        when(mMockSharedPreferencesEditor.putInt(eq(Scoop.PREFERENCE_FLAVOR_KEY), anyInt()))
+                .thenReturn(mMockSharedPreferencesEditor);
+
+        when(mMockSharedPreferencesEditor.putInt(eq(Scoop.PREFERENCE_DAYNIGHT_KEY), anyInt()))
+                .thenReturn(mMockSharedPreferencesEditor);
+
+        when(mMockSharedPreferences.edit())
+                .thenReturn(mMockSharedPreferencesEditor);
+
         Scoop.waffleCone()
                 .addFlavor(TEST_FLAVORS)
                 .setSharedPreferences(mMockSharedPreferences)
                 .initialize();
+    }
 
+    @Test
+    public void getDayNightMode() throws Exception {
         int mode = Scoop.getInstance().getDayNightMode();
         assertThat(mode, is(NIGHT_MODE));
     }
 
     @Test
     public void getFlavors() throws Exception {
-        Scoop.waffleCone()
-                .addFlavor(TEST_FLAVORS)
-                .setSharedPreferences(mMockSharedPreferences)
-                .initialize();
-
         List<Flavor> flavors = Scoop.getInstance().getFlavors();
         List<Flavor> testFlavors = Arrays.asList(TEST_FLAVORS);
 
@@ -74,16 +86,6 @@ public class ScoopTest {
 
     @Test
     public void getCurrentFlavor() throws Exception {
-        // setup mMockSharedPrefer
-        when(mMockSharedPreferences.getInt(eq(Scoop.PREFERENCE_FLAVOR_KEY), anyInt()))
-                .thenReturn(1);
-
-        // Setup Scoop
-        Scoop.waffleCone()
-                .addFlavor(TEST_FLAVORS)
-                .setSharedPreferences(mMockSharedPreferences)
-                .initialize();
-
         Flavor currentFlavor = Scoop.getInstance().getCurrentFlavor();
         assertEquals(currentFlavor, TEST_FLAVORS[1]);
     }
@@ -91,21 +93,15 @@ public class ScoopTest {
     @Test
     public void choose() throws Exception {
         int choice = 2;
+        when(mMockSharedPreferences.getInt(eq(Scoop.PREFERENCE_FLAVOR_KEY), anyInt()))
+                .thenReturn(choice);
+
         Flavor choiceFlavor = TEST_FLAVORS[choice];
-
-        // Setup Scoop
-        Scoop.waffleCone()
-                .addFlavor(TEST_FLAVORS)
-                .setSharedPreferences(mMockSharedPreferences)
-                .initialize();
-
         Scoop.getInstance().choose(choiceFlavor);
 
-    }
+        Flavor currentFlavor = Scoop.getInstance().getCurrentFlavor();
 
-    @Test
-    public void chooseDayNightMode() throws Exception {
-
+        assertEquals(choiceFlavor, currentFlavor);
     }
 
 }

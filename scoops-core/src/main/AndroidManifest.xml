@@ -5,7 +5,9 @@
         android:supportsRtl="true">
 
         <!-- Flavor Settings Activity -->
-        <activity android:name=".ui.ScoopSettingsActivity" />
+        <activity android:name=".ui.ScoopSettingsActivity"
+            android:theme="@style/Theme.AppCompat.Light"
+            />
 
     </application>
 
