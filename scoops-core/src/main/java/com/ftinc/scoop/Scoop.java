@@ -48,6 +48,12 @@ public class Scoop {
         return new Builder();
     }
 
+    public static SugarCone sugarCone(){
+        Scoop instance = getInstance();
+        instance.checkInit();
+        return instance.mSugarCone;
+    }
+
     /***********************************************************************************************
      *
      * Constants
@@ -85,6 +91,11 @@ public class Scoop {
     private SharedPreferences mPreferences;
 
     /**
+     * SugarCone instance to track the deeper color customizations
+     */
+    private SugarCone mSugarCone;
+
+    /**
      * Private constructor to prevent initialization
      */
     private Scoop(){}
@@ -113,6 +124,9 @@ public class Scoop {
             if(builder.defaultFlavor != null){
                 mDefaultFlavorIndex = mFlavors.indexOf(builder.defaultFlavor);
             }
+
+            // SugarCone
+            mSugarCone = new SugarCone();
 
             // Set init flag
             mInitialized = true;
