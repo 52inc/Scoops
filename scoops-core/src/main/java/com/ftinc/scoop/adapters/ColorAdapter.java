@@ -4,16 +4,16 @@ import android.support.annotation.ColorInt;
 import android.view.View;
 
 /**
- * Created by r0adkll on 6/16/16.
+ * An adapter that dictates how a color property or change is applied
+ * to a given view
  */
-
 public interface ColorAdapter<T extends View> {
 
     /**
      * Apply the color to the given view
      *
-     * @param view
-     * @param color
+     * @param view      the view to apply the color to
+     * @param color     the color to apply
      */
     void applyColor(T view, @ColorInt int color);
 
