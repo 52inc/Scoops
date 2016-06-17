@@ -1,6 +1,8 @@
 package com.ftinc.scoop.util;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.support.annotation.ColorInt;
 import android.util.TypedValue;
 
 /**
@@ -21,6 +23,10 @@ public class Utils {
 
     public static int dipToPx(Context ctx, float dp){
         return (int) dpToPx(ctx, dp);
+    }
+
+    public static ColorStateList colorToStateList(@ColorInt int color){
+        return new ColorStateList(new int[][]{new int[0]}, new int[]{color});
     }
 
 }
