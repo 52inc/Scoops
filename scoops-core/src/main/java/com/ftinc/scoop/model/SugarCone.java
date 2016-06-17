@@ -1,6 +1,9 @@
 package com.ftinc.scoop.model;
 
+import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
+import android.app.Activity;
+import android.os.Build;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Interpolator;
@@ -15,7 +18,9 @@ import com.ftinc.scoop.adapters.TextViewColorAdapter;
 import com.ftinc.scoop.adapters.ViewGroupColorAdapter;
 import com.ftinc.scoop.model.Topping;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 
@@ -45,39 +50,71 @@ public class SugarCone {
         }
     };
 
+    private static final long DEFAULT_ANIMATION_DURATION = 300L;
+
     /***********************************************************************************************
      *
      * Variables
      *
      */
 
-    View view;
-    Interpolator mInterpolater;
-    Topping property;
+    private List<Topping> mToppings = new ArrayList<>();
 
+    /***********************************************************************************************
+     *
+     * Api Methods
+     *
+     */
 
-    void add(View view, Interpolator interpolator, Topping property){
-
-    }
-
-    void update(View view, Interpolator interpolator, Topping property){
-        ColorAdapter adapter = COLOR_ADAPTERS.get(view.getClass());
+    public void update(final View view, Interpolator interpolator, Topping property){
+        final ColorAdapter adapter = getColorAdapter(view.getClass());
 
         int fromColor = property.getPreviousColor();
         int toColor = property.getColor();
 
-        ValueAnimator anim = ValueAnimator.ofArgb(fromColor, toColor)
-                .setDuration(300);
+        ValueAnimator anim;
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            anim = ValueAnimator.ofArgb(fromColor, toColor)
+                    .setDuration(DEFAULT_ANIMATION_DURATION);
+        }else{
+            anim = ValueAnimator.ofInt(fromColor, toColor)
+                    .setDuration(DEFAULT_ANIMATION_DURATION);
+            anim.setEvaluator(new ArgbEvaluator());
+        }
 
         anim.setInterpolator(interpolator);
         anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
-
+                int colorValue = (int) valueAnimator.getAnimatedValue();
+                adapter.applyColor(view, colorValue);
             }
         });
 
     }
 
+    public void bind(Activity activity){
+        // Do Some Binding
 
+    }
+
+    /***********************************************************************************************
+     *
+     * Helper Methods
+     *
+     */
+
+    private <T extends View> ColorAdapter<T> getColorAdapter(Class<T> clazz){
+        ColorAdapter adapter = COLOR_ADAPTERS.get(clazz);
+        if(adapter == null){
+            adapter = new DefaultColorAdapter();
+        }
+        return adapter;
+    }
+
+
+    public <T extends Topping> SugarCone addTopping(T topping) {
+        mToppings.add(topping);
+        return this;
+    }
 }
