@@ -3,19 +3,17 @@ package com.ftinc.scoop;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.TypedArray;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.StyleRes;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AppCompatDelegate;
-import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.ftinc.scoop.model.Flavor;
+import com.ftinc.scoop.model.SugarCone;
 import com.ftinc.scoop.util.AttrUtils;
 
 import java.util.ArrayList;
