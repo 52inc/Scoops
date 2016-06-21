@@ -102,6 +102,51 @@ ScoopSettingsActivity.createIntent(Context, R.string.some_title_to_use);
 ScoopSettingsActivity.createIntent(Context, "Some title to use");
 ```
 
+## Beta
+
+You can access beta by adding these lines to your gradle configuration:
+
+```groovy
+allprojects {
+    repositories {
+        jcenter()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    }
+}
+```
+
+```groovy
+compile 'com.52inc:scoops:1.0.0-SNAPSHOT'
+```
+
+### Dynamic color property changing
+
+This is the ability to have a view or attribute update it's color (background, src, text, etc) whenever the user/developer chnages the color for a defined property, or `Topping`. Please refer to [Sample App](https://github.com/52inc/Scoops/tree/feature-dynamic-color-attr/app/src/main/java/com/ftinc/themeenginetest) for actual code references.
+
+For example:
+
+```java
+Toolbar mAppBar;
+
+@Override
+public void onCreate(Bundle savedInstanceState){
+	super.onCreate(savedInstanceState);
+	setContentView(R.layout.some_layout);
+	
+	Scoop.sugarCone().bind(this, Toppings.PRIMARY, mAppBar);
+	Scoop.sugarCone().bindStatusBar(this, Toppings.PRIMARY_DARK);
+}
+
+void onSomeEvent(){
+	Scoop.sugarCone().update(Toppings.PRIMARY, someColorInt);
+	Scoop.sugarCone().update(Toppings.PRIMARY_DARK, someDarkColorInt);
+}
+
+```
+
+This is just they initial feature set. Soon I will streamline this with Annotation Processor, and add in plugin abilities to easily tie in the likes of Palette and other libraries as well as refine the API and make it more fluent.
+
+
 ## License
 
 	Copyright (c) 2016 52inc
