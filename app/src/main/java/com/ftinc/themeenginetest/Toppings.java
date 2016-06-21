@@ -12,7 +12,7 @@ import com.ftinc.scoop.model.Topping;
 public class Toppings {
 
     public static final int PRIMARY = 0;
-    public static final int PRIMARY_DARK = 0;
+    public static final int PRIMARY_DARK = 1;
 
     public static Topping[] getToppings(){
         return new Topping[]{

@@ -72,7 +72,7 @@ public final class Topping {
     }
 
     public void updateColor(@ColorInt int color){
-        this.previousColor = color;
+        this.previousColor = this.color;
         this.color = color;
     }
 

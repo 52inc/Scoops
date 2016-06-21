@@ -1,5 +1,8 @@
 package com.ftinc.scoop.model;
 
+import android.app.Activity;
+import android.support.annotation.ColorInt;
+import android.support.annotation.Nullable;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +16,13 @@ import com.ftinc.scoop.adapters.ImageViewColorAdapter;
 import com.ftinc.scoop.adapters.TextViewColorAdapter;
 import com.ftinc.scoop.adapters.ViewGroupColorAdapter;
 
-import java.util.ArrayList;
+import java.security.InvalidParameterException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * This class represents the management of individual coloring attributes as to update element colors
@@ -53,7 +57,7 @@ public class SugarCone {
      */
 
     private SparseArray<Topping> mToppings = new SparseArray<>();
-    private List<Binding> mBindings = new ArrayList<>();
+    private HashMap<Class, Set<IBinding>> mBindings = new HashMap<>();
 
     /***********************************************************************************************
      *
@@ -61,39 +65,84 @@ public class SugarCone {
      *
      */
 
-    public Binding bind(int toppingId, View view){
-        return bind(toppingId, view, null);
+    public IBinding bind(Object obj, int toppingId, View view){
+        return bind(obj, toppingId, view, null);
     }
 
-    /**
-     * Bind a view to a specific topping
-     *
-     * @param toppingId         the topping to bind the view to changes to
-     * @param view              the view to update based on property changes
-     * @param interpolator      the interpolator to use to animate the changes
-     * @return                  the Binding to use
-     */
-    public Binding bind(int toppingId, View view, Interpolator interpolator){
+    public IBinding bind(Object obj, int toppingId, View view, @Nullable ColorAdapter colorAdapter){
+        return bind(obj, toppingId, view, colorAdapter, null);
+    }
+
+    public IBinding bind(Object obj, int toppingId, View view, @Nullable ColorAdapter colorAdapter, @Nullable Interpolator interpolator){
+
+        // Get a default color adapter if not supplied
+        if(colorAdapter == null){
+            colorAdapter = getColorAdapter(view.getClass());
+        }
+
+        // Generate Binding
+        IBinding binding = new ViewBinding(toppingId, view, colorAdapter, interpolator);
+
+        // Bind
+        return bind(obj, toppingId, binding);
+    }
+
+    public IBinding bindStatusBar(Activity activity, int toppingId){
+        return bindStatusBar(activity, toppingId, null);
+    }
+
+    public IBinding bindStatusBar(Activity activity, int toppingId, @Nullable Interpolator interpolator){
+        IBinding binding = new StatusBarBinding(toppingId, activity, interpolator);
+        return bind(activity, toppingId, binding);
+    }
+
+    public IBinding bind(Object obj, int toppingId, IBinding binding){
+
+        // Find Topping
         Topping topping = mToppings.get(toppingId);
         if(topping != null){
-            Binding binding = new Binding(toppingId, view, getColorAdapter(view.getClass()), interpolator);
-            mBindings.add(binding);
+
+            // Store binding
+            Set<IBinding> bindings = getBindings(obj.getClass());
+            bindings.add(binding);
+
             return binding;
+        }else{
+            throw new InvalidParameterException("No Topping for the given id (" + toppingId + ") was found.");
         }
 
-        return null;
     }
 
-    public void unbind(int toppingId){
-        List<Binding> _trash = new ArrayList<>(mBindings.size());
-        for (Binding mBinding : mBindings) {
-            if(mBinding.getToppingId() == toppingId){
-                mBinding.unbind();
-                _trash.add(mBinding);
-            }
+    public void unbind(Object obj){
+        Set<IBinding> bindings = getBindings(obj.getClass());
+        for (IBinding binding : bindings) {
+            binding.unbind();
         }
 
-        mBindings.removeAll(_trash);
+        // Clear the bindings out of the map
+        mBindings.remove(obj.getClass());
+    }
+
+    public void update(int toppingId, @ColorInt int color){
+
+        // Get the topping
+        Topping topping = mToppings.get(toppingId);
+        if(topping != null){
+            topping.updateColor(color);
+
+            // Update bindings
+            Collection<Set<IBinding>> bindings = mBindings.values();
+            for (Set<IBinding> bindingSet : bindings) {
+                for (IBinding binding : bindingSet) {
+                    if(binding.getToppingId() == toppingId) {
+                        binding.update(topping);
+                    }
+                }
+            }
+
+        }else{
+            throw new InvalidParameterException("No Topping for the given id (" + toppingId + ") was found.");
+        }
     }
 
     /***********************************************************************************************
@@ -101,6 +150,15 @@ public class SugarCone {
      * Helper Methods
      *
      */
+
+    private Set<IBinding> getBindings(Class clazz){
+        Set<IBinding> bindings = mBindings.get(clazz);
+        if(bindings == null){
+            bindings = new HashSet<>();
+            mBindings.put(clazz, bindings);
+        }
+        return bindings;
+    }
 
     private <T extends View> ColorAdapter<T> getColorAdapter(Class<T> clazz){
         ColorAdapter adapter = COLOR_ADAPTERS.get(clazz);
