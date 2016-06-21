@@ -105,7 +105,12 @@ public class SugarCone {
     private <T extends View> ColorAdapter<T> getColorAdapter(Class<T> clazz){
         ColorAdapter adapter = COLOR_ADAPTERS.get(clazz);
         if(adapter == null){
-            adapter = new DefaultColorAdapter();
+
+            // Try super class
+            adapter = COLOR_ADAPTERS.get(clazz.getSuperclass());
+            if(adapter == null) {
+                adapter = new DefaultColorAdapter();
+            }
         }
         return adapter;
     }
