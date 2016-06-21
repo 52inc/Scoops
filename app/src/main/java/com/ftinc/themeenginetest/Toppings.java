@@ -11,29 +11,14 @@ import com.ftinc.scoop.model.Topping;
 
 public class Toppings {
 
-    static class Primary extends Topping{
-        public static Primary create(){
-            return new Primary();
-        }
-        public Primary() {
-            super("Primary");
-        }
-    }
+    public static final int PRIMARY = 0;
+    public static final int PRIMARY_DARK = 0;
 
-    public static class PrimaryDark extends Topping{
-        public static PrimaryDark create(){
-            return new PrimaryDark();
-        }
-        public PrimaryDark(){
-            super("Primary Dark");
-        }
-    }
-
-
-    public static void add(){
-        Scoop.sugarCone()
-                .addTopping(Primary.create())
-                .addTopping(PrimaryDark.create());
+    public static Topping[] getToppings(){
+        return new Topping[]{
+                new Topping(PRIMARY, "Primary"),
+                new Topping(PRIMARY_DARK, "Primary Dark")
+        };
     }
 
 }

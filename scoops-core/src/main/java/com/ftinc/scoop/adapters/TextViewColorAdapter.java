@@ -12,4 +12,9 @@ public class TextViewColorAdapter implements ColorAdapter<TextView> {
     public void applyColor(TextView view, @ColorInt int color) {
         view.setTextColor(color);
     }
+
+    @Override
+    public int getColor(TextView view) {
+        return view.getCurrentTextColor();
+    }
 }

@@ -1,13 +1,9 @@
 package com.ftinc.scoop.model;
 
-import android.animation.ArgbEvaluator;
-import android.animation.ValueAnimator;
-import android.app.Activity;
-import android.os.Build;
+import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Interpolator;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,13 +12,13 @@ import com.ftinc.scoop.adapters.DefaultColorAdapter;
 import com.ftinc.scoop.adapters.ImageViewColorAdapter;
 import com.ftinc.scoop.adapters.TextViewColorAdapter;
 import com.ftinc.scoop.adapters.ViewGroupColorAdapter;
-import com.ftinc.scoop.model.Topping;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Observable;
 
 /**
  * This class represents the management of individual coloring attributes as to update element colors
@@ -50,15 +46,14 @@ public class SugarCone {
         }
     };
 
-    private static final long DEFAULT_ANIMATION_DURATION = 300L;
-
     /***********************************************************************************************
      *
      * Variables
      *
      */
 
-    private List<Topping> mToppings = new ArrayList<>();
+    private SparseArray<Topping> mToppings = new SparseArray<>();
+    private List<Binding> mBindings = new ArrayList<>();
 
     /***********************************************************************************************
      *
@@ -66,36 +61,39 @@ public class SugarCone {
      *
      */
 
-    public void update(final View view, Interpolator interpolator, Topping property){
-        final ColorAdapter adapter = getColorAdapter(view.getClass());
-
-        int fromColor = property.getPreviousColor();
-        int toColor = property.getColor();
-
-        ValueAnimator anim;
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            anim = ValueAnimator.ofArgb(fromColor, toColor)
-                    .setDuration(DEFAULT_ANIMATION_DURATION);
-        }else{
-            anim = ValueAnimator.ofInt(fromColor, toColor)
-                    .setDuration(DEFAULT_ANIMATION_DURATION);
-            anim.setEvaluator(new ArgbEvaluator());
-        }
-
-        anim.setInterpolator(interpolator);
-        anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                int colorValue = (int) valueAnimator.getAnimatedValue();
-                adapter.applyColor(view, colorValue);
-            }
-        });
-
+    public Binding bind(int toppingId, View view){
+        return bind(toppingId, view, null);
     }
 
-    public void bind(Activity activity){
-        // Do Some Binding
+    /**
+     * Bind a view to a specific topping
+     *
+     * @param toppingId         the topping to bind the view to changes to
+     * @param view              the view to update based on property changes
+     * @param interpolator      the interpolator to use to animate the changes
+     * @return                  the Binding to use
+     */
+    public Binding bind(int toppingId, View view, Interpolator interpolator){
+        Topping topping = mToppings.get(toppingId);
+        if(topping != null){
+            Binding binding = new Binding(toppingId, view, getColorAdapter(view.getClass()), interpolator);
+            mBindings.add(binding);
+            return binding;
+        }
 
+        return null;
+    }
+
+    public void unbind(int toppingId){
+        List<Binding> _trash = new ArrayList<>(mBindings.size());
+        for (Binding mBinding : mBindings) {
+            if(mBinding.getToppingId() == toppingId){
+                mBinding.unbind();
+                _trash.add(mBinding);
+            }
+        }
+
+        mBindings.removeAll(_trash);
     }
 
     /***********************************************************************************************
@@ -113,8 +111,14 @@ public class SugarCone {
     }
 
 
-    public <T extends Topping> SugarCone addTopping(T topping) {
-        mToppings.add(topping);
+    public SugarCone addTopping(Topping... topping) {
+        return addToppings(Arrays.asList(topping));
+    }
+
+    public SugarCone addToppings(Collection<Topping> toppings){
+        for (Topping topping : toppings) {
+            mToppings.put(topping.getId(), topping);
+        }
         return this;
     }
 }

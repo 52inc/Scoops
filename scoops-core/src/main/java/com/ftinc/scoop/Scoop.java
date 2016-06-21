@@ -14,6 +14,7 @@ import android.view.MenuItem;
 
 import com.ftinc.scoop.model.Flavor;
 import com.ftinc.scoop.model.SugarCone;
+import com.ftinc.scoop.model.Topping;
 import com.ftinc.scoop.util.AttrUtils;
 
 import java.util.ArrayList;
@@ -125,6 +126,7 @@ public class Scoop {
 
             // SugarCone
             mSugarCone = new SugarCone();
+            mSugarCone.addToppings(builder.toppings);
 
             // Set init flag
             mInitialized = true;
@@ -319,9 +321,11 @@ public class Scoop {
         private SharedPreferences prefs;
         private Flavor defaultFlavor;
         private final List<Flavor> flavors;
+        private final List<Topping> toppings;
 
         Builder(){
             flavors = new ArrayList<>();
+            toppings = new ArrayList<>();
         }
 
         public Builder addFlavor(String name,
@@ -371,6 +375,11 @@ public class Scoop {
 
         public Builder addFlavor(Flavor... flavor){
             flavors.addAll(Arrays.asList(flavor));
+            return this;
+        }
+
+        public Builder addToppings(Topping... toppings){
+            this.toppings.addAll(Arrays.asList(toppings));
             return this;
         }
 

@@ -16,7 +16,7 @@ import android.support.annotation.ColorInt;
  * Package: com.ftinc.scoop.model
  * Created by drew.heavner on 6/17/16.
  */
-public abstract class Topping {
+public final class Topping {
 
     /***********************************************************************************************
      *
@@ -24,6 +24,7 @@ public abstract class Topping {
      *
      */
 
+    final int id;
     final String name;
 
     @ColorInt
@@ -38,12 +39,13 @@ public abstract class Topping {
      *
      */
 
-    public Topping(String name){
+    public Topping(int id, String name){
+        this.id = id;
         this.name = name;
     }
 
-    public Topping(String name, int defaultColor){
-        this(name);
+    public Topping(int id, String name, int defaultColor){
+        this(id, name);
         color = previousColor = defaultColor;
     }
 
@@ -52,6 +54,10 @@ public abstract class Topping {
      * Getters
      *
      */
+
+    public int getId(){
+        return id;
+    }
 
     public String getName() {
         return name;
@@ -77,6 +83,7 @@ public abstract class Topping {
 
         Topping topping = (Topping) o;
 
+        if (id != topping.id) return false;
         if (color != topping.color) return false;
         if (previousColor != topping.previousColor) return false;
         return name != null ? name.equals(topping.name) : topping.name == null;
@@ -85,7 +92,8 @@ public abstract class Topping {
 
     @Override
     public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
+        int result = id;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + color;
         result = 31 * result + previousColor;
         return result;
@@ -94,7 +102,8 @@ public abstract class Topping {
     @Override
     public String toString() {
         return "Topping{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", color=" + color +
                 ", previousColor=" + previousColor +
                 '}';

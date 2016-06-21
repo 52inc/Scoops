@@ -24,7 +24,7 @@ import static java.lang.annotation.RetentionPolicy.CLASS;
 @Target(FIELD)
 public @interface BindScoop {
 
-    Class<? extends Topping> value();
+    int value();
 
     /**
      * OPTIONAL

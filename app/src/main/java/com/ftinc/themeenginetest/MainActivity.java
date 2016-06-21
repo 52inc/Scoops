@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import com.ftinc.scoop.Scoop;
 import com.ftinc.scoop.annotations.BindScoop;
 import com.ftinc.scoop.ui.ScoopSettingsActivity;
-import com.ftinc.themeenginetest.Toppings.Primary;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int RC_CHANGE_THEME = 0;
 
-    @BindScoop(Primary.class)
+    @BindScoop(Toppings.PRIMARY)
     @BindView(R.id.appbar)
     Toolbar mAppBar;
 
@@ -42,10 +41,19 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         // Bind Scoop to annoted fields in this class
-        Scoop.sugarCone().bind(this);
+//        Scoop.sugarCone().bind(this);
+        Scoop.sugarCone()
+                .bind(Toppings.PRIMARY, mAppBar);
 
         // Setup Toolbar
         setSupportActionBar(mAppBar);
+    }
+
+    @Override
+    protected void onDestroy() {
+        Scoop.sugarCone()
+                .unbind(Toppings.PRIMARY);
+        super.onDestroy();
     }
 
     @Override

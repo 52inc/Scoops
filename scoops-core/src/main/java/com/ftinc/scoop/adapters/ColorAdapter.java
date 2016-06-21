@@ -17,4 +17,13 @@ public interface ColorAdapter<T extends View> {
      */
     void applyColor(T view, @ColorInt int color);
 
+    /**
+     * Get the current color for the element
+     *
+     * @param view      the view to get the color from
+     * @return          the current color
+     */
+    @ColorInt
+    int getColor(T view);
+
 }

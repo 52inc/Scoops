@@ -1,5 +1,6 @@
 package com.ftinc.scoop.adapters;
 
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Build;
 import android.support.annotation.ColorInt;
@@ -19,5 +20,16 @@ public class ImageViewColorAdapter implements ColorAdapter<ImageView> {
         }else{
             view.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
         }
+    }
+
+    @Override
+    public int getColor(ImageView view) {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            if(view.getImageTintList() != null) {
+                view.getImageTintList().getDefaultColor();
+            }
+        }
+
+        return 0;
     }
 }
