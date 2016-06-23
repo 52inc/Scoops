@@ -123,7 +123,7 @@ public class SugarCone {
         mBindings.remove(obj.getClass());
     }
 
-    public void update(int toppingId, @ColorInt int color){
+    public SugarCone update(int toppingId, @ColorInt int color){
 
         // Get the topping
         Topping topping = mToppings.get(toppingId);
@@ -143,6 +143,8 @@ public class SugarCone {
         }else{
             throw new InvalidParameterException("No Topping for the given id (" + toppingId + ") was found.");
         }
+
+        return this;
     }
 
     /***********************************************************************************************
