@@ -8,6 +8,10 @@ package com.ftinc.scoop.util;
 
 public class ReflectionUtils {
 
+    private ReflectionUtils(){
+        throw new IllegalAccessError("This class is not allowed to be instantiated");
+    }
+
     public static boolean isTypeOf(Class<?> myClass, Class<?> superClass) {
         boolean isSubclassOf = false;
         if (!myClass.equals(superClass)) {
