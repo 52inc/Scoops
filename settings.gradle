@@ -1,1 +1,1 @@
-include ':app', ':scoops-core'
+include ':app', ':scoops-core', ':scoops-processor', ':scoops-annotations'
