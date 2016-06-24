@@ -16,7 +16,7 @@ import android.support.annotation.ColorInt;
  * Package: com.ftinc.scoop.model
  * Created by drew.heavner on 6/17/16.
  */
-public final class Topping {
+public class Topping {
 
     /***********************************************************************************************
      *

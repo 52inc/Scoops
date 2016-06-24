@@ -3,6 +3,7 @@ package com.ftinc.scoop.model;
 import android.app.Activity;
 import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
@@ -220,7 +221,8 @@ public class SugarCone {
      *
      */
 
-    private Set<IBinding> getBindings(Class clazz){
+
+    Set<IBinding> getBindings(Class clazz){
         Set<IBinding> bindings = mBindings.get(clazz);
         if(bindings == null){
             bindings = new HashSet<>();
@@ -229,7 +231,7 @@ public class SugarCone {
         return bindings;
     }
 
-    private <T extends View> ColorAdapter<T> getColorAdapter(Class<T> clazz){
+    <T extends View> ColorAdapter<T> getColorAdapter(Class<T> clazz){
         ColorAdapter adapter = COLOR_ADAPTERS.get(clazz);
         if(adapter == null){
 
@@ -252,5 +254,9 @@ public class SugarCone {
             mToppings.put(topping.getId(), topping);
         }
         return this;
+    }
+
+    public SparseArray<Topping> getToppings(){
+        return mToppings;
     }
 }
