@@ -1,0 +1,23 @@
+package com.ftinc.scoop.util;
+
+/**
+ * Project: ThemeEngineTest
+ * Package: com.ftinc.scoop.util
+ * Created by drew.heavner on 6/24/16.
+ */
+
+public class ReflectionUtils {
+
+    public static boolean isTypeOf(Class<?> myClass, Class<?> superClass) {
+        boolean isSubclassOf = false;
+        if (!myClass.equals(superClass)) {
+            myClass = myClass.getSuperclass();
+            isSubclassOf = isTypeOf(myClass, superClass);
+        } else {
+            isSubclassOf = true;
+        }
+
+        return isSubclassOf;
+    }
+
+}

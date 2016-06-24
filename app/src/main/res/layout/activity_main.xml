@@ -11,134 +11,361 @@
     android:descendantFocusability="beforeDescendants"
     >
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/appbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="?attr/actionBarSize"
-
-        app:title="Scoops"
-        android:background="?attr/colorPrimary"
-        android:elevation="6dp"
-        android:theme="?attr/toolbarTheme"
-        app:popupTheme="?attr/toolbarPopupTheme"
-
-        />
-
-    <TextView
-        android:text="Welcome to Scoops!"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView"
-        android:gravity="center"
-        android:textSize="20sp"
-        android:fontFamily="sans-serif-medium"
-        android:layout_below="@+id/appbar"
-        android:layout_marginTop="16dp"
-        />
-
     <LinearLayout
-        android:id="@+id/button_group"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@+id/textView"
-        android:gravity="center"
-        android:layout_marginTop="16dp"
-        >
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
 
-        <Button
-            android:layout_width="88dp"
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/appbar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:minHeight="?attr/actionBarSize"
 
-            android:text="Button"
-            android:id="@+id/button"
+            app:title="Scoops"
+            android:background="?attr/colorPrimary"
+            android:elevation="6dp"
+            android:theme="?attr/toolbarTheme"
+            app:popupTheme="?attr/toolbarPopupTheme"
+
             />
 
-        <Button style="@style/Widget.AppCompat.Button.Colored"
+        <TextView
+            android:text="Welcome to Scoops!"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:fontFamily="sans-serif-medium"
+            android:layout_below="@+id/appbar"
+            android:layout_marginTop="16dp"
+            />
+
+        <LinearLayout
+            android:id="@+id/button_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/textView"
+            android:gravity="center"
+            android:layout_marginTop="16dp"
+            >
+
+            <Button
+                android:layout_width="88dp"
+                android:layout_height="wrap_content"
+
+                android:text="Button"
+                android:id="@+id/button"
+                />
+
+            <Button style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Colored"
-                android:id="@+id/button2"
+                android:id="@+id/button_colored"
+                />
+
+            <ToggleButton
+                android:text="ToggleButton"
+                android:layout_width="88dp"
+                android:layout_height="48dp"
+                android:id="@+id/toggleButton"
+                />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/options_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/button_group"
+            android:gravity="center"
+            android:layout_marginTop="16dp"
+            >
+
+            <Switch
+                android:text="Switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/switch1"
+                android:switchPadding="8dp"
+                />
+
+            <CheckBox
+                android:text="CheckBox"
+                android:layout_width="96dp"
+                android:layout_height="34dp"
+                android:id="@+id/checkBox"
+                />
+
+            <RadioButton
+                android:text="RadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:id="@+id/radioButton"
+                />
+
+        </LinearLayout>
+
+        <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="18dp"
+            android:id="@+id/seekBar"
+            android:progress="25"
+            android:layout_below="@+id/options_group"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp"
             />
 
-        <ToggleButton
-            android:text="ToggleButton"
-            android:layout_width="88dp"
+        <RatingBar
+            android:layout_width="wrap_content"
             android:layout_height="48dp"
-            android:id="@+id/toggleButton"
+            android:id="@+id/ratingBar2"
+            android:rating="2.5"
+            android:stepSize=".5"
+            android:numStars="5"
+
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/seekBar"
+            android:layout_marginTop="16dp"
             />
 
+        <ProgressBar
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/ratingBar2"
+            android:layout_marginTop="16dp"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+
+            android:text="Primary Color"
+            android:textSize="14sp"
+            android:textColor="?android:attr/textColorPrimary"
+            android:fontFamily="sans-serif-medium"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            >
+
+            <Button
+                android:id="@+id/primary1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/red_400"
+                />
+
+            <Button
+                android:id="@+id/primary2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/pink_400"
+                />
+
+            <Button
+                android:id="@+id/primary3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/purple_400"
+                />
+
+            <Button
+                android:id="@+id/primary4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/blue_400"
+                />
+
+            <Button
+                android:id="@+id/primary5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/blue_grey_400"
+                />
+
+            <Button
+                android:id="@+id/primary6"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/green_400"
+                />
+
+        </LinearLayout>
+
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+
+            android:text="Primary Dark Color"
+            android:textSize="14sp"
+            android:textColor="?android:attr/textColorPrimary"
+            android:fontFamily="sans-serif-medium"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            >
+
+            <Button
+                android:id="@+id/dark1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/red_700"
+                />
+
+            <Button
+                android:id="@+id/dark2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/pink_700"
+                />
+
+            <Button
+                android:id="@+id/dark3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/purple_700"
+                />
+
+            <Button
+                android:id="@+id/dark4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/blue_700"
+                />
+
+            <Button
+                android:id="@+id/dark5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/blue_grey_700"
+                />
+
+            <Button
+                android:id="@+id/dark6"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/green_700"
+                />
+
+        </LinearLayout>
+
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+
+            android:text="Accent Color"
+            android:textSize="14sp"
+            android:textColor="?android:attr/textColorPrimary"
+            android:fontFamily="sans-serif-medium"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            >
+
+            <Button
+                android:id="@+id/accent1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/amber_500"
+                />
+
+            <Button
+                android:id="@+id/accent2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/brown_500"
+                />
+
+            <Button
+                android:id="@+id/accent3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/cyan_500"
+                />
+
+            <Button
+                android:id="@+id/accent4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/deep_orange_500"
+                />
+
+            <Button
+                android:id="@+id/accent5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/yellow_500"
+                />
+
+            <Button
+                android:id="@+id/accent6"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/teal_a400"
+                />
+
+        </LinearLayout>
 
     </LinearLayout>
-
-   <LinearLayout
-       android:id="@+id/options_group"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:orientation="horizontal"
-       android:layout_below="@+id/button_group"
-       android:gravity="center"
-       android:layout_marginTop="16dp"
-       >
-
-       <Switch
-           android:text="Switch"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:id="@+id/switch1"
-           android:switchPadding="8dp"
-           />
-
-       <CheckBox
-           android:text="CheckBox"
-           android:layout_width="96dp"
-           android:layout_height="34dp"
-           android:id="@+id/checkBox"
-           />
-
-       <RadioButton
-           android:text="RadioButton"
-           android:layout_width="wrap_content"
-           android:layout_height="32dp"
-           android:id="@+id/radioButton"
-           />
-
-   </LinearLayout>
-
-    <SeekBar
-        android:layout_width="match_parent"
-        android:layout_height="18dp"
-        android:id="@+id/seekBar"
-        android:progress="25"
-        android:layout_below="@+id/options_group"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="16dp"
-        />
-
-    <RatingBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/ratingBar2"
-        android:rating="2.5"
-        android:stepSize=".5"
-        android:numStars="5"
-
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/seekBar"
-        android:layout_marginTop="16dp"
-        />
-
-    <ProgressBar
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="76dp"
-        android:layout_height="76dp"
-        android:id="@+id/progressBar"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/ratingBar2"
-        android:layout_marginTop="16dp"
-        />
 
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"

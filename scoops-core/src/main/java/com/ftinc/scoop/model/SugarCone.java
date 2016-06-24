@@ -3,6 +3,7 @@ package com.ftinc.scoop.model;
 import android.app.Activity;
 import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,12 @@ import com.ftinc.scoop.adapters.DefaultColorAdapter;
 import com.ftinc.scoop.adapters.ImageViewColorAdapter;
 import com.ftinc.scoop.adapters.TextViewColorAdapter;
 import com.ftinc.scoop.adapters.ViewGroupColorAdapter;
+import com.ftinc.scoop.annotations.BindScoop;
+import com.ftinc.scoop.annotations.BindScoopStatus;
+import com.ftinc.scoop.util.ReflectionUtils;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
 import java.security.InvalidParameterException;
 import java.util.Arrays;
 import java.util.Collection;
@@ -34,6 +40,7 @@ import java.util.Set;
  * Created by drew.heavner on 6/17/16.
  */
 public class SugarCone {
+    private static final String TAG = "SugarCone";
 
     /***********************************************************************************************
      *
@@ -64,6 +71,66 @@ public class SugarCone {
      * Api Methods
      *
      */
+
+    public void bind(Activity activity){
+        // Check activity for BindScoopStatus
+        if(activity.getClass().isAnnotationPresent(BindScoopStatus.class)){
+            BindScoopStatus annotation = activity.getClass().getAnnotation(BindScoopStatus.class);
+            int toppingId = annotation.value();
+            Interpolator interpolator = null;
+            try {
+                interpolator = annotation.interpolator().newInstance();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+
+            Log.d(TAG, String.format("StatusBar Binding(%d, %s)", toppingId, interpolator));
+
+            // Create status bar binding
+            bindStatusBar(activity, toppingId, interpolator);
+        }
+
+        // Scan Fields
+        for (Field field : activity.getClass().getDeclaredFields()) {
+            if(field.isAnnotationPresent(BindScoop.class)) {
+                BindScoop annotation = field.getAnnotation(BindScoop.class);
+                Class type = field.getType();
+                if(ReflectionUtils.isTypeOf(type, View.class)) {
+                    field.setAccessible(true);
+
+                    // Build Binding
+                    try {
+                        View view = (View) field.get(activity);
+
+                        // Get Color Adapter
+                        ColorAdapter adapter = annotation.adapter().newInstance();
+                        if(adapter instanceof DefaultColorAdapter){
+                            adapter = getColorAdapter(type);
+                        }
+
+                        // Get Interpolator
+                        Interpolator interpolator = annotation.interpolator().newInstance();
+
+                        // Get the property topping id
+                        int toppingId = annotation.value();
+
+                        Log.d(TAG, String.format("View Binding [%d](%s, %s, %s)", toppingId, view, adapter, interpolator));
+
+                        // Create Binding
+                        bind(activity, toppingId, view, adapter, interpolator);
+
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    } catch (InstantiationException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+        }
+    }
 
     public SugarCone bind(Object obj, int toppingId, View view){
         return bind(obj, toppingId, view, null);
