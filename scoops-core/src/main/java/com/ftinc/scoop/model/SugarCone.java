@@ -65,15 +65,15 @@ public class SugarCone {
      *
      */
 
-    public IBinding bind(Object obj, int toppingId, View view){
+    public SugarCone bind(Object obj, int toppingId, View view){
         return bind(obj, toppingId, view, null);
     }
 
-    public IBinding bind(Object obj, int toppingId, View view, @Nullable ColorAdapter colorAdapter){
+    public SugarCone bind(Object obj, int toppingId, View view, @Nullable ColorAdapter colorAdapter){
         return bind(obj, toppingId, view, colorAdapter, null);
     }
 
-    public IBinding bind(Object obj, int toppingId, View view, @Nullable ColorAdapter colorAdapter, @Nullable Interpolator interpolator){
+    public SugarCone bind(Object obj, int toppingId, View view, @Nullable ColorAdapter colorAdapter, @Nullable Interpolator interpolator){
 
         // Get a default color adapter if not supplied
         if(colorAdapter == null){
@@ -87,16 +87,16 @@ public class SugarCone {
         return bind(obj, toppingId, binding);
     }
 
-    public IBinding bindStatusBar(Activity activity, int toppingId){
+    public SugarCone bindStatusBar(Activity activity, int toppingId){
         return bindStatusBar(activity, toppingId, null);
     }
 
-    public IBinding bindStatusBar(Activity activity, int toppingId, @Nullable Interpolator interpolator){
+    public SugarCone bindStatusBar(Activity activity, int toppingId, @Nullable Interpolator interpolator){
         IBinding binding = new StatusBarBinding(toppingId, activity, interpolator);
         return bind(activity, toppingId, binding);
     }
 
-    public IBinding bind(Object obj, int toppingId, IBinding binding){
+    public SugarCone bind(Object obj, int toppingId, IBinding binding){
 
         // Find Topping
         Topping topping = mToppings.get(toppingId);
@@ -106,7 +106,7 @@ public class SugarCone {
             Set<IBinding> bindings = getBindings(obj.getClass());
             bindings.add(binding);
 
-            return binding;
+            return this;
         }else{
             throw new InvalidParameterException("No Topping for the given id (" + toppingId + ") was found.");
         }

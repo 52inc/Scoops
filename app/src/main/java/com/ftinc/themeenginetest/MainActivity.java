@@ -67,9 +67,7 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         Scoop.sugarCone()
-                .bind(this, Toppings.PRIMARY, mAppBar);
-
-        Scoop.sugarCone()
+                .bind(this, Toppings.PRIMARY, mAppBar)
                 .bindStatusBar(this, Toppings.PRIMARY_DARK);
 
         // Setup Toolbar
