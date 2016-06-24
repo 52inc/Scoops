@@ -116,12 +116,14 @@ allprojects {
 ```
 
 ```groovy
-compile 'com.52inc:scoops:1.0.0-SNAPSHOT'
+compile 'com.52inc:scoops:0.2.1-SNAPSHOT'
 ```
 
 ### Dynamic color property changing
 
 This is the ability to have a view or attribute update it's color (background, src, text, etc) whenever the user/developer chnages the color for a defined property, or `Topping`. Please refer to [Sample App](https://github.com/52inc/Scoops/tree/feature-dynamic-color-attr/app/src/main/java/com/ftinc/themeenginetest) for actual code references.
+
+#### Manual Implementation
 
 For example:
 
@@ -133,18 +135,65 @@ public void onCreate(Bundle savedInstanceState){
 	super.onCreate(savedInstanceState);
 	setContentView(R.layout.some_layout);
 	
-	Scoop.sugarCone().bind(this, Toppings.PRIMARY, mAppBar);
-	Scoop.sugarCone().bindStatusBar(this, Toppings.PRIMARY_DARK);
+	Scoop.sugarCone().bind(this, Toppings.PRIMARY, mAppBar)
+					 .bindStatusBar(this, Toppings.PRIMARY_DARK);
 }
 
 void onSomeEvent(){
-	Scoop.sugarCone().update(Toppings.PRIMARY, someColorInt);
-	Scoop.sugarCone().update(Toppings.PRIMARY_DARK, someDarkColorInt);
+	Scoop.sugarCone().update(Toppings.PRIMARY, someColorInt) 
+ 					 .update(Toppings.PRIMARY_DARK, someDarkColorInt);
 }
 
 ```
 
-This is just they initial feature set. Soon I will streamline this with Annotation Processor, and add in plugin abilities to easily tie in the likes of Palette and other libraries as well as refine the API and make it more fluent.
+#### Annotated Implementation
+There are two annotations to use to binding views and the like to color properties that can be dynamically updated (i.e. palette, etc) which are `@BindScoop()` and `@BindScoopStatus()`.
+
+The former binds a View to a color property and the later binds an activities status bar color to a property.
+For Example:
+
+```java
+@BindScoopStatus(Toppings.PRIMARY_DARK)
+public class MainActivity extends AppCompatActivity {
+
+    @BindScoop(Toppings.PRIMARY)
+    @BindView(R.id.appbar)
+    Toolbar mAppBar;
+
+    @BindScoop(
+            value = Toppings.ACCENT,
+            adapter = FABColorAdapter.class,
+            interpolator = AccelerateInterpolator.class
+    )
+    @BindView(R.id.fab)
+    FloatingActionButton mFab;
+    
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Bind ButterKnife
+        ButterKnife.bind(this);
+
+        // Bind Scoops
+        Scoop.sugarCone().bind(this);
+		
+		...
+    }
+
+    @Override
+    protected void onDestroy() {
+        Scoop.sugarCone().unbind(this);
+        super.onDestroy();
+    }
+}
+```
+
+Then just all update to the color properties like shown earlier
+
+
+_This is just they initial feature set. Soon I will streamline this with Annotation Processor, and add in plugin abilities to easily tie in the likes of Palette and other libraries as well as refine the API and make it more fluent._
 
 
 ## License
