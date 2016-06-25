@@ -1,4 +1,4 @@
-package com.ftinc.scoop.model;
+package com.ftinc.scoop.binding;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
@@ -6,6 +6,8 @@ import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.view.animation.Interpolator;
+
+import com.ftinc.scoop.model.Topping;
 
 /**
  * Project: ThemeEngineTest
@@ -24,7 +26,7 @@ public abstract class AnimatedBinding extends IBinding {
     }
 
     @Override
-    void update(Topping topping) {
+    public void update(Topping topping) {
 
         int fromColor = topping.getPreviousColor() != 0 ?
                 topping.getPreviousColor() : getCurrentColor() != 0 ?

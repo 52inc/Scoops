@@ -18,13 +18,12 @@ android {
         }
     }
 
-
-
     sourceSets { main { res.srcDirs = ['src/main/res', 'src/androidTest/res'] } }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile project(':scoops-annotations')
     compile 'com.android.support:appcompat-v7:24.0.0'
     compile 'com.android.support:recyclerview-v7:24.0.0'
 

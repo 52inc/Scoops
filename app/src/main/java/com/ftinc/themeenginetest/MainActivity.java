@@ -13,9 +13,9 @@ import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.Button;
 
+import com.ftinc.scoop.BindScoop;
+import com.ftinc.scoop.BindScoopStatus;
 import com.ftinc.scoop.Scoop;
-import com.ftinc.scoop.annotations.BindScoop;
-import com.ftinc.scoop.annotations.BindScoopStatus;
 import com.ftinc.scoop.ui.ScoopSettingsActivity;
 import com.ftinc.themeenginetest.adapters.ButtonColorAdapter;
 import com.ftinc.themeenginetest.adapters.FABColorAdapter;

@@ -1,6 +1,5 @@
 package com.ftinc.scoop.adapters;
 
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Build;
 import android.support.annotation.ColorInt;

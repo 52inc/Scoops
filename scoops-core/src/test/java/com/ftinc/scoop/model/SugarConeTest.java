@@ -2,6 +2,8 @@ package com.ftinc.scoop.model;
 
 import android.util.SparseArray;
 
+import com.ftinc.scoop.binding.IBinding;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

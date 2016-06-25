@@ -1,10 +1,12 @@
-package com.ftinc.scoop.model;
+package com.ftinc.scoop.binding;
 
 import android.app.Activity;
 import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.RequiresApi;
 import android.view.animation.Interpolator;
+
+import com.ftinc.scoop.model.Topping;
 
 /**
  * Project: ThemeEngineTest
@@ -24,7 +26,7 @@ public class StatusBarBinding extends AnimatedBinding {
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
-    void update(Topping topping) {
+    public void update(Topping topping) {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             super.update(topping);
         }

@@ -1,4 +1,6 @@
-package com.ftinc.scoop.model;
+package com.ftinc.scoop.binding;
+
+import com.ftinc.scoop.model.Topping;
 
 /**
  * Project: ThemeEngineTest
@@ -20,8 +22,8 @@ public abstract class IBinding {
         return toppingId;
     }
 
-    abstract void update(Topping topping);
+    public abstract void update(Topping topping);
 
-    abstract void unbind();
+    public abstract void unbind();
 
 }
