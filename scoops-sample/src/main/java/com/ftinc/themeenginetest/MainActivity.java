@@ -12,13 +12,25 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.RatingBar;
+import android.widget.SeekBar;
+import android.widget.Switch;
+import android.widget.ToggleButton;
 
 import com.ftinc.scoop.BindScoop;
 import com.ftinc.scoop.BindScoopStatus;
 import com.ftinc.scoop.Scoop;
 import com.ftinc.scoop.ui.ScoopSettingsActivity;
 import com.ftinc.themeenginetest.adapters.ButtonColorAdapter;
+import com.ftinc.themeenginetest.adapters.CompoundButtonColorAdapter;
 import com.ftinc.themeenginetest.adapters.FABColorAdapter;
+import com.ftinc.themeenginetest.adapters.ProgressBarColorAdapter;
+import com.ftinc.themeenginetest.adapters.RatingBarColorAdapter;
+import com.ftinc.themeenginetest.adapters.SeekBarColorAdapter;
+import com.ftinc.themeenginetest.adapters.SwitchColorAdapter;
 
 import java.util.Random;
 
@@ -62,6 +74,48 @@ public class MainActivity extends AppCompatActivity {
     )
     @BindView(R.id.button_colored)
     Button mColoredButton;
+
+    @BindScoop(
+            value = Toppings.ACCENT,
+            adapter = SwitchColorAdapter.class
+    )
+    @BindView(R.id.switch1)
+    Switch mSwitch;
+
+    @BindScoop(
+            value = Toppings.ACCENT,
+            adapter = CompoundButtonColorAdapter.class
+    )
+    @BindView(R.id.checkBox)
+    CheckBox mCheckBox;
+
+    @BindScoop(
+            value = Toppings.ACCENT,
+            adapter = CompoundButtonColorAdapter.class
+    )
+    @BindView(R.id.radioButton)
+    RadioButton mRadioButton;
+
+    @BindScoop(
+            value = Toppings.ACCENT,
+            adapter = RatingBarColorAdapter.class
+    )
+    @BindView(R.id.ratingBar2)
+    RatingBar mRatingBar;
+
+    @BindScoop(
+            value = Toppings.ACCENT,
+            adapter = SeekBarColorAdapter.class
+    )
+    @BindView(R.id.seekBar)
+    SeekBar mSeekBar;
+
+    @BindScoop(
+            value = Toppings.ACCENT,
+            adapter = ProgressBarColorAdapter.class
+    )
+    @BindView(R.id.progressBar)
+    ProgressBar mProgressBar;
 
     /***********************************************************************************************
      *

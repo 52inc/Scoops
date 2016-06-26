@@ -33,7 +33,7 @@ public class StatusBarBinding extends AnimatedBinding {
     }
 
     @Override
-    void unbind() {
+    public void unbind() {
         super.unbind();
         mActivity = null;
     }

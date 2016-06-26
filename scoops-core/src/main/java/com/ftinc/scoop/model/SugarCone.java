@@ -2,7 +2,9 @@ package com.ftinc.scoop.model;
 
 import android.app.Activity;
 import android.support.annotation.ColorInt;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.UiThread;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
@@ -21,14 +23,19 @@ import com.ftinc.scoop.binding.IBinding;
 import com.ftinc.scoop.binding.StatusBarBinding;
 import com.ftinc.scoop.binding.ViewBinding;
 import com.ftinc.scoop.adapters.ColorAdapter;
+import com.ftinc.scoop.internal.ToppingBinder;
+import com.ftinc.scoop.util.BindingUtils;
 import com.ftinc.scoop.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
 import java.security.InvalidParameterException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -44,20 +51,15 @@ import java.util.Set;
 public class SugarCone {
     private static final String TAG = "SugarCone";
 
-    /***********************************************************************************************
-     *
-     * Constants
-     *
-     */
-
-    private static final Map<Class, ColorAdapter> COLOR_ADAPTERS = new HashMap<Class, ColorAdapter>(){
-        {
-            put(View.class, new DefaultColorAdapter());
-            put(ViewGroup.class, new ViewGroupColorAdapter());
-            put(TextView.class, new TextViewColorAdapter());
-            put(ImageView.class, new ImageViewColorAdapter());
+    static final Map<Class<?>, ToppingBinder<Object>> BINDERS = new LinkedHashMap<>();
+    static final ToppingBinder<Object> NOP_VIEW_BINDER = new ToppingBinder<Object>() {
+        @Override
+        public List<IBinding> bind(Object target) {
+            return new ArrayList<>();
         }
     };
+
+    private static boolean debug = false;
 
     /***********************************************************************************************
      *
@@ -68,70 +70,24 @@ public class SugarCone {
     private SparseArray<Topping> mToppings = new SparseArray<>();
     private HashMap<Class, Set<IBinding>> mBindings = new HashMap<>();
 
+
+
     /***********************************************************************************************
      *
      * Api Methods
      *
      */
 
+    public void setDebug(boolean flag){
+        SugarCone.debug = flag;
+    }
+
     public void bind(Activity activity){
-        // Check activity for BindScoopStatus
-        if(activity.getClass().isAnnotationPresent(BindScoopStatus.class)){
-            BindScoopStatus annotation = activity.getClass().getAnnotation(BindScoopStatus.class);
-            int toppingId = annotation.value();
-            Interpolator interpolator = null;
-            try {
-                interpolator = annotation.interpolator().newInstance();
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
+        List<IBinding> bindings = getViewBinder(activity).bind(activity);
 
-            Log.d(TAG, String.format("StatusBar Binding(%d, %s)", toppingId, interpolator));
-
-            // Create status bar binding
-            bindStatusBar(activity, toppingId, interpolator);
-        }
-
-        // Scan Fields
-        for (Field field : activity.getClass().getDeclaredFields()) {
-            if(field.isAnnotationPresent(BindScoop.class)) {
-                BindScoop annotation = field.getAnnotation(BindScoop.class);
-                Class type = field.getType();
-                if(ReflectionUtils.isTypeOf(type, View.class)) {
-                    field.setAccessible(true);
-
-                    // Build Binding
-                    try {
-                        View view = (View) field.get(activity);
-
-                        // Get Color Adapter
-                        ColorAdapter adapter = annotation.adapter().newInstance();
-                        if(adapter instanceof DefaultColorAdapter){
-                            adapter = getColorAdapter(type);
-                        }
-
-                        // Get Interpolator
-                        Interpolator interpolator = annotation.interpolator().newInstance();
-
-                        // Get the property topping id
-                        int toppingId = annotation.value();
-
-                        Log.d(TAG, String.format("View Binding [%d](%s, %s, %s)", toppingId, view, adapter, interpolator));
-
-                        // Create Binding
-                        bind(activity, toppingId, view, adapter, interpolator);
-
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
-                    } catch (InstantiationException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-            }
-        }
+        // add to system
+        Set<IBinding> _bindings = getBindings(activity.getClass());
+        _bindings.addAll(bindings);
     }
 
     public SugarCone bind(Object obj, int toppingId, View view){
@@ -146,7 +102,7 @@ public class SugarCone {
 
         // Get a default color adapter if not supplied
         if(colorAdapter == null){
-            colorAdapter = getColorAdapter(view.getClass());
+            colorAdapter = BindingUtils.getColorAdapter(view.getClass());
         }
 
         // Generate Binding
@@ -222,6 +178,43 @@ public class SugarCone {
      *
      */
 
+    @NonNull @UiThread
+    static ToppingBinder<Object> getViewBinder(@NonNull Object target) {
+        Class<?> targetClass = target.getClass();
+        if (debug) Log.d(TAG, "Looking up topping binder for " + targetClass.getName());
+        return findViewBinderForClass(targetClass);
+    }
+
+    @NonNull @UiThread
+    private static ToppingBinder<Object> findViewBinderForClass(Class<?> cls) {
+        ToppingBinder<Object> viewBinder = BINDERS.get(cls);
+        if (viewBinder != null) {
+            if (debug) Log.d(TAG, "HIT: Cached in topping binder map.");
+            return viewBinder;
+        }
+        String clsName = cls.getName();
+        if (clsName.startsWith("android.") || clsName.startsWith("java.")) {
+            if (debug) Log.d(TAG, "MISS: Reached framework class. Abandoning search.");
+            return NOP_VIEW_BINDER;
+        }
+        //noinspection TryWithIdenticalCatches Resolves to API 19+ only type.
+        try {
+            Class<?> viewBindingClass = Class.forName(clsName + "_ToppingBinder");
+            //noinspection unchecked
+            viewBinder = (ToppingBinder<Object>) viewBindingClass.newInstance();
+            if (debug) Log.d(TAG, "HIT: Loaded topping binder class.");
+        } catch (ClassNotFoundException e) {
+            if (debug) Log.d(TAG, "Not found. Trying superclass " + cls.getSuperclass().getName());
+            viewBinder = findViewBinderForClass(cls.getSuperclass());
+        } catch (InstantiationException e) {
+            throw new RuntimeException("Unable to create topping binder for " + clsName, e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException("Unable to create topping binder for " + clsName, e);
+        }
+        BINDERS.put(cls, viewBinder);
+        return viewBinder;
+    }
+
 
     Set<IBinding> getBindings(Class clazz){
         Set<IBinding> bindings = mBindings.get(clazz);
@@ -231,20 +224,6 @@ public class SugarCone {
         }
         return bindings;
     }
-
-    <T extends View> ColorAdapter<T> getColorAdapter(Class<T> clazz){
-        ColorAdapter adapter = COLOR_ADAPTERS.get(clazz);
-        if(adapter == null){
-
-            // Try super class
-            adapter = COLOR_ADAPTERS.get(clazz.getSuperclass());
-            if(adapter == null) {
-                adapter = new DefaultColorAdapter();
-            }
-        }
-        return adapter;
-    }
-
 
     public SugarCone addTopping(Topping... topping) {
         return addToppings(Arrays.asList(topping));

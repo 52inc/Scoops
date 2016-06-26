@@ -3,16 +3,20 @@ package com.ftinc.scoop;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * This represents the processor brew into a
  * ViewBinding object in the generated code
  *
  * Created by r0adkll on 6/26/16.
  */
-final class FieldViewBinding {
+final class FieldViewBinding extends Binding{
     private static final ClassName VIEW_BINDING = ClassName.get("com.ftinc.scoop.binding", "ViewBinding");
+    private static final ClassName BINDING_UTILS = ClassName.get("com.ftinc.scoop.util", "BindingUtils");
+    private static final ClassName NO_ADAPTER = ClassName.get("com.ftinc.scoop.BindScoop", "NONE");
 
-    private final int id;
     private final String name;
     private final ClassName adapter;
     private final ClassName interpolator;
@@ -21,14 +25,21 @@ final class FieldViewBinding {
                             String name,
                             ClassName adapter,
                             ClassName interpolator) {
-        this.id = id;
+        super(id);
         this.name = name;
         this.adapter = adapter;
         this.interpolator = interpolator;
     }
 
-    private String getStatementFormat(){
-        StringBuilder builder = new StringBuilder("bindings.add(new $T($L, target.$L, new $T()");
+    @Override
+    public String getStatementFormat(){
+        StringBuilder builder = new StringBuilder("bindings.add(new $T($L, target.$L");
+        if(adapter.equals(NO_ADAPTER)){
+            builder.append(", $T.getColorAdapter(target.$L.getClass())");
+        }else{
+            builder.append(", new $T()");
+        }
+
         if(interpolator != null) {
             builder.append(", new $T()");
         } else {
@@ -38,24 +49,25 @@ final class FieldViewBinding {
         return builder.toString();
     }
 
-    private Object[] getStatementArguments(){
-        int size = 4;
-        if(interpolator != null) size++;
+    @Override
+    public Object[] getStatementArguments(){
+        List<Object> args = new ArrayList<>(6);
+        args.add(VIEW_BINDING);
+        args.add(id);
+        args.add(name);
 
-        Object[] args = new Object[size];
-        args[0] = VIEW_BINDING;
-        args[1] = id;
-        args[2] = name;
-        args[3] = adapter;
-        if(interpolator != null){
-            args[4] = interpolator;
+        if(adapter.equals(NO_ADAPTER)){
+            args.add(BINDING_UTILS);
+            args.add(name);
+        }else{
+            args.add(adapter);
         }
 
-        return args;
-    }
+        if(interpolator != null){
+            args.add(interpolator);
+        }
 
-    public com.squareup.javapoet.MethodSpec.Builder brewStatement(MethodSpec.Builder method){
-        return method.addStatement(getStatementFormat(), getStatementArguments());
+        return args.toArray();
     }
 
 }

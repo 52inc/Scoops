@@ -29,4 +29,20 @@ public class Utils {
         return new ColorStateList(new int[][]{new int[0]}, new int[]{color});
     }
 
+    public static ColorStateList colorToStateList(@ColorInt int color, @ColorInt int disabledColor){
+        return new ColorStateList(
+                new int[][]{
+                        new int[]{-android.R.attr.state_enabled},
+                        new int[]{-android.R.attr.state_checked},
+                        new int[]{}
+                },
+                new int[]{
+                        disabledColor,
+                        disabledColor,
+                        color
+                });
+    }
+
+
+
 }

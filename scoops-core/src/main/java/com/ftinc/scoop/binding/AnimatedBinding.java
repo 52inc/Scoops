@@ -66,7 +66,7 @@ public abstract class AnimatedBinding extends IBinding {
     }
 
     @Override
-    void unbind() {
+    public void unbind() {
         mInterpolator = null;
         if(mAnimator != null){
             mAnimator.cancel();
