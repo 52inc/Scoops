@@ -1,7 +1,5 @@
 package com.ftinc.scoop;
 
-import android.view.animation.LinearInterpolator;
-
 import com.google.auto.common.SuperficialValidation;
 import com.google.auto.service.AutoService;
 import com.squareup.javapoet.ClassName;
@@ -102,7 +100,6 @@ public final class ScoopsProcesssor extends AbstractProcessor{
 
     private Map<TypeElement, BindingClass> findAndParseTargets(RoundEnvironment env) {
         Map<TypeElement, BindingClass> targetClassMap = new LinkedHashMap<>();
-        Set<TypeElement> erasedTargetNames = new LinkedHashSet<>();
 
         // Process each @BindScoop class
         for (Element element : env.getElementsAnnotatedWith(BindScoop.class)) {
