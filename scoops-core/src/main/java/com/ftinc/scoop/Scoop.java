@@ -13,7 +13,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.ftinc.scoop.model.Flavor;
-import com.ftinc.scoop.model.SugarCone;
 import com.ftinc.scoop.model.Topping;
 import com.ftinc.scoop.util.AttrUtils;
 

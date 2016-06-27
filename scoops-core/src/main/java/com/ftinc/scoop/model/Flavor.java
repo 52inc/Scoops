@@ -9,7 +9,7 @@ import android.support.annotation.StyleRes;
  * Package: com.ftinc.scoop.model
  * Created by drew.heavner on 6/7/16.
  */
-public class Flavor {
+public final class Flavor {
 
     /***********************************************************************************************
      *

@@ -1,8 +1,10 @@
-package com.ftinc.scoop.model;
+package com.ftinc.scoop;
 
 import android.util.SparseArray;
 
+import com.ftinc.scoop.SugarCone;
 import com.ftinc.scoop.binding.IBinding;
+import com.ftinc.scoop.model.Topping;
 
 import org.junit.Before;
 import org.junit.Test;

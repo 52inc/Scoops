@@ -15,9 +15,11 @@ import com.ftinc.themeenginetest.R;
 
 public class CompoundButtonColorAdapter implements ColorAdapter<CompoundButton>{
 
+    int disabledColor = 0;
+
     @Override
     public void applyColor(CompoundButton view, @ColorInt int color) {
-        int disabledColor = AttrUtils.getColorAttr(view.getContext(), R.attr.colorControlNormal);
+        if(disabledColor == 0) disabledColor = AttrUtils.getColorAttr(view.getContext(), R.attr.colorControlNormal);
         view.setButtonTintList(Utils.colorToStateList(color, disabledColor));
     }
 

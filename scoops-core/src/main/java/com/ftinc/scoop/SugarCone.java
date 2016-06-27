@@ -1,4 +1,4 @@
-package com.ftinc.scoop.model;
+package com.ftinc.scoop;
 
 import android.app.Activity;
 import android.support.annotation.ColorInt;
@@ -8,26 +8,16 @@ import android.support.annotation.UiThread;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Interpolator;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.ftinc.scoop.BindScoop;
-import com.ftinc.scoop.BindScoopStatus;
-import com.ftinc.scoop.adapters.DefaultColorAdapter;
-import com.ftinc.scoop.adapters.ImageViewColorAdapter;
-import com.ftinc.scoop.adapters.TextViewColorAdapter;
-import com.ftinc.scoop.adapters.ViewGroupColorAdapter;
 import com.ftinc.scoop.binding.IBinding;
 import com.ftinc.scoop.binding.StatusBarBinding;
 import com.ftinc.scoop.binding.ViewBinding;
 import com.ftinc.scoop.adapters.ColorAdapter;
 import com.ftinc.scoop.internal.ToppingBinder;
+import com.ftinc.scoop.model.Topping;
 import com.ftinc.scoop.util.BindingUtils;
-import com.ftinc.scoop.util.ReflectionUtils;
 
-import java.lang.reflect.Field;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -69,8 +59,6 @@ public class SugarCone {
 
     private SparseArray<Topping> mToppings = new SparseArray<>();
     private HashMap<Class, Set<IBinding>> mBindings = new HashMap<>();
-
-
 
     /***********************************************************************************************
      *
