@@ -1,8 +1,5 @@
 apply plugin: 'java'
 
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
-
 def logger = new com.android.build.gradle.internal.LoggerWrapper(project.logger)
 def sdkHandler = new com.android.build.gradle.internal.SdkHandler(project, logger)
 for (File file : sdkHandler.sdkLoader.repositories) {
@@ -11,10 +8,12 @@ for (File file : sdkHandler.sdkLoader.repositories) {
     }
 }
 
+sourceCompatibility = rootProject.ext.sourceCompatibilityVersion
+targetCompatibility = rootProject.ext.targetCompatibilityVersion
+
 dependencies {
-    compile 'com.google.android:android:2.1.2'
-    compile 'com.android.support:support-annotations:24.0.0'
+    compileOnly deps.android
+    compile deps.supportAnnotations
 }
 
-project.group = GROUP
-project.version = VERSION_CODE
+apply from: rootProject.file('gradle/gradle-mvn-push.gradle')

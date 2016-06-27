@@ -1,30 +1,26 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+subprojects { project ->
+    group = GROUP
+    version = VERSION_NAME
 
-buildscript {
     repositories {
-        jcenter()
         mavenCentral()
     }
-    dependencies {
 
-        classpath 'com.android.tools.build:gradle:2.2.0-alpha4'
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+    buildscript {
+        repositories {
+            mavenCentral()
+            maven {
+                url "https://plugins.gradle.org/m2/"
+            }
+        }
+        dependencies {
+            classpath 'com.android.tools.build:gradle:2.2.0-alpha4'
+            classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+        }
     }
-}
 
-allprojects {
-    repositories {
-        jcenter()
-        mavenCentral()
-    }
-}
 
-project.ext.preDexLibs = !project.hasProperty('disablePreDex')
-
-subprojects {
     project.plugins.whenPluginAdded { plugin ->
         if ("com.android.build.gradle.AppPlugin".equals(plugin.class.name)) {
             project.android.dexOptions.preDexLibraries = rootProject.ext.preDexLibs
@@ -37,3 +33,51 @@ subprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+project.ext.preDexLibs = !project.hasProperty('disablePreDex')
+
+ext {
+    minSdkVersion = 16
+    targetSdkVersion = 24
+    compileSdkVersion = 24
+    buildToolsVersion = '24.0.0'
+    sourceCompatibilityVersion = JavaVersion.VERSION_1_7
+    targetCompatibilityVersion = JavaVersion.VERSION_1_7
+}
+
+def androidToolsVersion = '25.1.2'
+
+ext.deps = [
+        // Android
+        android: 'com.google.android:android:2.1.2',
+        androidGradle: 'com.android.tools.build:gradle:2.1.2',
+
+        supportv4: 'com.android.support:support-v4:24.0.0',
+        supportAnnotations: 'com.android.support:support-annotations:24.0.0',
+        supportAppCompat: 'com.android.support:appcompat-v7:24.0.0',
+        supportRecyclerView: 'com.android.support:recyclerview-v7:24.0.0',
+        supportDesign: 'com.android.support:design:24.0.0',
+
+        butterknife: 'com.jakewharton:butterknife:8.0.1',
+        butterknifeCompiler: 'com.jakewharton:butterknife-compiler:8.0.1',
+        timber: 'com.jakewharton.timber:timber:4.1.2',
+
+        // Square
+        javapoet: 'com.squareup:javapoet:1.7.0',
+
+        // Third Party
+        javaparser: 'com.github.javaparser:javaparser-core:2.4.0',
+
+        // Test dependencies
+        mockito: 'org.mockito:mockito-core:1.10.19',
+        junit: 'junit:junit:4.12',
+        truth: 'com.google.truth:truth:0.28',
+        robolectric: 'org.robolectric:robolectric:3.1',
+        compiletesting: 'com.google.testing.compile:compile-testing:0.9',
+        autoservice: 'com.google.auto.service:auto-service:1.0-rc2',
+        autocommon: 'com.google.auto:auto-common:0.6',
+
+        espresso: 'com.android.support.test.espresso:espresso-core:2.2.2',
+        espressoContrib: 'com.android.support.test.espresso:espresso-contrib:2.2.2',
+        runner: 'com.android.support.test:runner:0.5'
+]

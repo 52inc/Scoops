@@ -1,12 +1,11 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "23.0.3"
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 24
+        minSdkVersion rootProject.ext.minSdkVersion
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -22,18 +21,19 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':scoops-annotations')
-    compile 'com.android.support:appcompat-v7:24.0.0'
-    compile 'com.android.support:recyclerview-v7:24.0.0'
+    compile deps.supportAppCompat
+    compile deps.supportRecyclerView
 
-    testCompile 'junit:junit:4.12'
-    testCompile "org.mockito:mockito-core:1.10.19"
-    testCompile "org.robolectric:robolectric:3.0"
-    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
-    androidTestCompile 'com.android.support.test:runner:0.5'
-    androidTestCompile 'com.android.support:support-annotations:24.0.0'
-    androidTestCompile('com.android.support.test.espresso:espresso-contrib:2.2.2') {
+    testCompile deps.junit
+    testCompile deps.truth
+    testCompile deps.robolectric
+    testCompile deps.mockito
+
+    androidTestCompile deps.espresso
+    androidTestCompile deps.runner
+    androidTestCompile deps.supportAnnotations
+    androidTestCompile (deps.espressoContrib) {
         // Necessary to avoid version conflicts
         exclude group: 'com.android.support', module: 'appcompat'
         exclude group: 'com.android.support', module: 'support-v4'
@@ -42,4 +42,4 @@ dependencies {
     }
 }
 
-apply from: '../gradle-mvn-push.gradle'
+apply from: rootProject.file('gradle/gradle-mvn-push.gradle')

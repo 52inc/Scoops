@@ -1,8 +1,5 @@
 apply plugin: 'java'
 
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
-
 def logger = new com.android.build.gradle.internal.LoggerWrapper(project.logger)
 def sdkHandler = new com.android.build.gradle.internal.SdkHandler(project, logger)
 for (File file : sdkHandler.sdkLoader.repositories) {
@@ -11,11 +8,20 @@ for (File file : sdkHandler.sdkLoader.repositories) {
     }
 }
 
+sourceCompatibility = rootProject.ext.sourceCompatibilityVersion
+targetCompatibility = rootProject.ext.targetCompatibilityVersion
+
 dependencies {
     compile project(':scoops-annotations')
-    compile 'com.squareup:javapoet:1.7.0'
-    compile 'com.google.auto.service:auto-service:1.0-rc2'
+    compile deps.autoservice
+    compile deps.autocommon
+    compile deps.javapoet
+
+    testCompile deps.android
+    testCompile deps.junit
+    testCompile deps.truth
+    testCompile deps.robolectric
+    testCompile deps.compiletesting
 }
 
-project.group = GROUP
-project.version = VERSION_CODE
+apply from: rootProject.file('gradle/gradle-mvn-push.gradle')
