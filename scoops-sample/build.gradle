@@ -39,6 +39,6 @@ dependencies {
 
     compile deps.timber
 
-    compile project(':scoops-core')
+    compile project(':scoops')
     apt project(':scoops-compiler')
 }

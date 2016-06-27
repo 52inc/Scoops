@@ -12,7 +12,7 @@ sourceCompatibility = rootProject.ext.sourceCompatibilityVersion
 targetCompatibility = rootProject.ext.targetCompatibilityVersion
 
 dependencies {
-    compile project(':scoops-annotations')
+    compile project(':scoops-core')
     compile deps.autoservice
     compile deps.autocommon
     compile deps.javapoet

@@ -1,45 +1,19 @@
-apply plugin: 'com.android.library'
+apply plugin: 'java'
 
-android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
-
-    defaultConfig {
-        minSdkVersion rootProject.ext.minSdkVersion
-
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+def logger = new com.android.build.gradle.internal.LoggerWrapper(project.logger)
+def sdkHandler = new com.android.build.gradle.internal.SdkHandler(project, logger)
+for (File file : sdkHandler.sdkLoader.repositories) {
+    project.repositories.maven {
+        url = file.toURI()
     }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
-
-    sourceSets { main { res.srcDirs = ['src/main/res', 'src/androidTest/res'] } }
 }
 
+sourceCompatibility = rootProject.ext.sourceCompatibilityVersion
+targetCompatibility = rootProject.ext.targetCompatibilityVersion
+
 dependencies {
-    compile project(':scoops-annotations')
-    compile deps.supportAppCompat
-    compile deps.supportRecyclerView
-
-    testCompile deps.junit
-    testCompile deps.truth
-    testCompile deps.robolectric
-    testCompile deps.mockito
-
-    androidTestCompile deps.espresso
-    androidTestCompile deps.runner
-    androidTestCompile deps.supportAnnotations
-    androidTestCompile (deps.espressoContrib) {
-        // Necessary to avoid version conflicts
-        exclude group: 'com.android.support', module: 'appcompat'
-        exclude group: 'com.android.support', module: 'support-v4'
-        exclude group: 'com.android.support', module: 'support-annotations'
-        exclude module: 'recyclerview-v7'
-    }
+    compileOnly deps.android
+    compile deps.supportAnnotations
 }
 
 apply from: rootProject.file('gradle/gradle-mvn-push.gradle')
