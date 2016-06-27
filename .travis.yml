@@ -11,7 +11,7 @@ env:
     - ANDROID_BUILD_TOOLS_VERSION=24.0.0
     - ANDROID_ABI=x86
     - ADB_INSTALL_TIMEOUT=8 # minutes (2 minutes by default)
-    - ANDROID_EMULATOR_API=24
+    - ANDROID_EMULATOR_API=23
 
 android:
   components:
@@ -19,6 +19,7 @@ android:
   - tools
   - tools
   - build-tools-$ANDROID_BUILD_TOOLS_VERSION
+  - android-23
   - android-$ANDROID_API_LEVEL
   - extra-android-m2repository
   - sys-img-x86-android-$ANDROID_EMULATOR_API
