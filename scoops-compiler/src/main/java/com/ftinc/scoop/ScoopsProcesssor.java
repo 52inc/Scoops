@@ -14,7 +14,6 @@ import java.lang.annotation.Annotation;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -68,8 +67,8 @@ public final class ScoopsProcesssor extends AbstractProcessor{
     public Set<String> getSupportedAnnotationTypes() {
         return new HashSet<>(
                 Arrays.asList(
-                        BindScoop.class.getCanonicalName(),
-                        BindScoopStatus.class.getCanonicalName()
+                        BindTopping.class.getCanonicalName(),
+                        BindToppingStatus.class.getCanonicalName()
                 )
         );
     }
@@ -101,35 +100,35 @@ public final class ScoopsProcesssor extends AbstractProcessor{
     private Map<TypeElement, BindingClass> findAndParseTargets(RoundEnvironment env) {
         Map<TypeElement, BindingClass> targetClassMap = new LinkedHashMap<>();
 
-        // Process each @BindScoop class
-        for (Element element : env.getElementsAnnotatedWith(BindScoop.class)) {
+        // Process each @BindTopping class
+        for (Element element : env.getElementsAnnotatedWith(BindTopping.class)) {
             if (!SuperficialValidation.validateElement(element)) continue;
             try {
-                parseBindScoop(element, targetClassMap);
+                parseBindTopping(element, targetClassMap);
             } catch (Exception e) {
-                logParsingError(element, BindScoop.class, e);
+                logParsingError(element, BindTopping.class, e);
             }
         }
 
-        // Process each @BindScoopStatus class
-        for (Element element : env.getElementsAnnotatedWith(BindScoopStatus.class)) {
+        // Process each @BindToppingStatus class
+        for (Element element : env.getElementsAnnotatedWith(BindToppingStatus.class)) {
             if(!SuperficialValidation.validateElement(element)) continue;
             try{
-                parseBindScoopStatus(element, targetClassMap);
+                parseBindToppingStatus(element, targetClassMap);
             }catch (Exception e){
-                logParsingError(element, BindScoopStatus.class, e);
+                logParsingError(element, BindToppingStatus.class, e);
             }
         }
 
         return targetClassMap;
     }
 
-    private void parseBindScoop(Element element, Map<TypeElement, BindingClass> targetClassMap){
+    private void parseBindTopping(Element element, Map<TypeElement, BindingClass> targetClassMap){
         TypeElement enclosingElement = (TypeElement) element.getEnclosingElement();
 
         // Start by verifying common generated code restrictions.
-        boolean hasError = isInaccessibleViaGeneratedCode(BindScoop.class, "fields", element)
-                || isBindingInWrongPackage(BindScoop.class, element);
+        boolean hasError = isInaccessibleViaGeneratedCode(BindTopping.class, "fields", element)
+                || isBindingInWrongPackage(BindTopping.class, element);
 
         // Verify that the target type extends from View.
         TypeMirror elementType = element.asType();
@@ -139,7 +138,7 @@ public final class ScoopsProcesssor extends AbstractProcessor{
         }
         if (!isSubtypeOfType(elementType, VIEW_TYPE) && !isInterface(elementType)) {
             error(element, "@%s fields must extend from View or be an interface. (%s.%s)",
-                    BindScoop.class.getSimpleName(), enclosingElement.getQualifiedName(),
+                    BindTopping.class.getSimpleName(), enclosingElement.getQualifiedName(),
                     element.getSimpleName());
             hasError = true;
         }
@@ -148,7 +147,7 @@ public final class ScoopsProcesssor extends AbstractProcessor{
             return;
         }
 
-        BindScoop annotation = element.getAnnotation(BindScoop.class);
+        BindTopping annotation = element.getAnnotation(BindTopping.class);
 
         // Start assembling binding information
         BindingClass bindingClass = getOrCreateTargetClass(targetClassMap, enclosingElement);
@@ -164,11 +163,11 @@ public final class ScoopsProcesssor extends AbstractProcessor{
 
     }
 
-    private void parseBindScoopStatus(Element element, Map<TypeElement, BindingClass> targetClassMap){
+    private void parseBindToppingStatus(Element element, Map<TypeElement, BindingClass> targetClassMap){
 
         // Verify that element is of type Class
         if(element.getKind() != ElementKind.CLASS){
-            error(element, "Only classes can be annotated with %s", BindScoopStatus.class.getSimpleName());
+            error(element, "Only classes can be annotated with %s", BindToppingStatus.class.getSimpleName());
         }else{
 
             // Start by verifying common generated code restrictions.
@@ -182,7 +181,7 @@ public final class ScoopsProcesssor extends AbstractProcessor{
             }
             if (!isSubtypeOfType(elementType, ACTIVITY_TYPE) && !isInterface(elementType)) {
                 error(element, "@%s classes must extend from Activity(%s.%s)",
-                        BindScoopStatus.class.getSimpleName(), element.getSimpleName());
+                        BindToppingStatus.class.getSimpleName(), element.getSimpleName());
                 hasError = true;
             }
 
@@ -190,7 +189,7 @@ public final class ScoopsProcesssor extends AbstractProcessor{
                 return;
             }
 
-            BindScoopStatus annotation = element.getAnnotation(BindScoopStatus.class);
+            BindToppingStatus annotation = element.getAnnotation(BindToppingStatus.class);
 
             // Start assembling binding information
             BindingClass bindingClass = getOrCreateTargetClass(targetClassMap, (TypeElement) element);
@@ -242,7 +241,7 @@ public final class ScoopsProcesssor extends AbstractProcessor{
         return null;
     }
 
-    private TypeMirror getAdapterTypeMirror(BindScoop annotation){
+    private TypeMirror getAdapterTypeMirror(BindTopping annotation){
         TypeMirror value = null;
         try {
             annotation.adapter();
@@ -252,7 +251,7 @@ public final class ScoopsProcesssor extends AbstractProcessor{
         return value;
     }
 
-    private TypeMirror getInterpolatorTypeMirror(BindScoop annotation){
+    private TypeMirror getInterpolatorTypeMirror(BindTopping annotation){
         TypeMirror value = null;
         try{
             annotation.interpolator();
@@ -263,7 +262,7 @@ public final class ScoopsProcesssor extends AbstractProcessor{
         return value;
     }
 
-    private TypeMirror getInterpolatorTypeMirror(BindScoopStatus annotation){
+    private TypeMirror getInterpolatorTypeMirror(BindToppingStatus annotation){
         TypeMirror value = null;
         try{
             annotation.interpolator();

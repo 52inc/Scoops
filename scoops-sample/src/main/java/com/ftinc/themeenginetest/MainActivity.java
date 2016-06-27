@@ -18,10 +18,9 @@ import android.widget.RadioButton;
 import android.widget.RatingBar;
 import android.widget.SeekBar;
 import android.widget.Switch;
-import android.widget.ToggleButton;
 
-import com.ftinc.scoop.BindScoop;
-import com.ftinc.scoop.BindScoopStatus;
+import com.ftinc.scoop.BindTopping;
+import com.ftinc.scoop.BindToppingStatus;
 import com.ftinc.scoop.Scoop;
 import com.ftinc.scoop.ui.ScoopSettingsActivity;
 import com.ftinc.themeenginetest.adapters.ButtonColorAdapter;
@@ -38,7 +37,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-@BindScoopStatus(Toppings.PRIMARY_DARK)
+@BindToppingStatus(Toppings.PRIMARY_DARK)
 public class MainActivity extends AppCompatActivity {
 
     /***********************************************************************************************
@@ -56,11 +55,11 @@ public class MainActivity extends AppCompatActivity {
      *
      */
 
-    @BindScoop(Toppings.PRIMARY)
+    @BindTopping(Toppings.PRIMARY)
     @BindView(R.id.appbar)
     Toolbar mAppBar;
 
-    @BindScoop(
+    @BindTopping(
             value = Toppings.ACCENT,
             adapter = FABColorAdapter.class,
             interpolator = AccelerateInterpolator.class
@@ -68,49 +67,49 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.fab)
     FloatingActionButton mFab;
 
-    @BindScoop(
+    @BindTopping(
             value = Toppings.ACCENT,
             adapter = ButtonColorAdapter.class
     )
     @BindView(R.id.button_colored)
     Button mColoredButton;
 
-    @BindScoop(
+    @BindTopping(
             value = Toppings.ACCENT,
             adapter = SwitchColorAdapter.class
     )
     @BindView(R.id.switch1)
     Switch mSwitch;
 
-    @BindScoop(
+    @BindTopping(
             value = Toppings.ACCENT,
             adapter = CompoundButtonColorAdapter.class
     )
     @BindView(R.id.checkBox)
     CheckBox mCheckBox;
 
-    @BindScoop(
+    @BindTopping(
             value = Toppings.ACCENT,
             adapter = CompoundButtonColorAdapter.class
     )
     @BindView(R.id.radioButton)
     RadioButton mRadioButton;
 
-    @BindScoop(
+    @BindTopping(
             value = Toppings.ACCENT,
             adapter = RatingBarColorAdapter.class
     )
     @BindView(R.id.ratingBar2)
     RatingBar mRatingBar;
 
-    @BindScoop(
+    @BindTopping(
             value = Toppings.ACCENT,
             adapter = SeekBarColorAdapter.class
     )
     @BindView(R.id.seekBar)
     SeekBar mSeekBar;
 
-    @BindScoop(
+    @BindTopping(
             value = Toppings.ACCENT,
             adapter = ProgressBarColorAdapter.class
     )

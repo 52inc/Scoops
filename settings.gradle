@@ -1,1 +1,1 @@
-include ':scoops-sample', ':scoops-core', ':scoops-processor', ':scoops-annotations'
+include ':scoops-sample', ':scoops-core', ':scoops-compiler', ':scoops-annotations'

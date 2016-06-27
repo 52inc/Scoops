@@ -16,7 +16,7 @@ import static java.lang.annotation.RetentionPolicy.CLASS;
  */
 @Retention(CLASS)
 @Target(TYPE)
-public @interface BindScoopStatus {
+public @interface BindToppingStatus {
     int value();
 
     /**
