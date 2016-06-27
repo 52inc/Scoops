@@ -9,8 +9,9 @@ env:
   global:
     - ANDROID_API_LEVEL=24
     - ANDROID_BUILD_TOOLS_VERSION=24.0.0
-    - ANDROID_ABI=armeabi-v7a
+    - ANDROID_ABI=x86
     - ADB_INSTALL_TIMEOUT=8 # minutes (2 minutes by default)
+    - ANDROID_EMULATOR_API=23
 
 android:
   components:
@@ -20,7 +21,7 @@ android:
   - build-tools-$ANDROID_BUILD_TOOLS_VERSION
   - android-$ANDROID_API_LEVEL
   - extra-android-m2repository
-  - sys-img-armeabi-v7a-android-$ANDROID_API_LEVEL
+  - sys-img-x86-android-$ANDROID_EMULATOR_API
   licenses:
   - android-sdk-license-.+
   - google-gdk-license-.+
