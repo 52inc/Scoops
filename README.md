@@ -5,7 +5,7 @@ Scoops
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.52inc/scoops/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.52inc/scoops) [![Build Status](https://travis-ci.org/52inc/Scoops.svg?branch=master)](https://travis-ci.org/52inc/Scoops)
 
-Android library for managing and applying multiple defined `R.style.Theme....` themes at runtime for dyanically changing the look and feel of your application
+Scoops is an Android library for managing and applying multiple defined `R.style.Theme....` themes at runtime for dynamically changing the look and feel of your application.
 
 ---
 ## Demo
@@ -53,7 +53,7 @@ protected void onCreate(Bundle savedInstanceState) {
 }
 ```
 
-You can also use `.applyDialog(...)` to apply the specified dialog theme resource to an activity (to make an activity appear as a dialog with the correct theme)
+You can also use `.applyDialog(...)` to apply the specified dialog theme resource to an activity (to make an activity appear as a dialog with the correct theme).
 
 ### Advanced Use
 
@@ -89,12 +89,12 @@ Then define the attribute in your themes like this:
 </style>
 ```
 
-You can also apply the `toolbarItemTint` color to all the icons in the toolbar by calling `.apply(Context, Menu)` 
+You can also apply the `toolbarItemTint` color to all the icons in the toolbar by calling `.apply(Context, Menu)`. 
 
 	
 ### Settings Menu
 
-This library provides a built in theme chooser settings screen to use called `ScoopSettingsActivity` that you can use by utilizing one of it's static Intent factories:
+This library provides a built-in theme chooser settings screen to use called `ScoopSettingsActivity` that you can use by utilizing one of its static Intent factories:
 
 ```java
 ScoopSettingsActivity.createIntent(Context);
@@ -190,10 +190,10 @@ public class MainActivity extends AppCompatActivity {
 }
 ```
 
-Then just all update to the color properties like shown earlier
+Then all properties will automatically update.
 
 
-_This is just they initial feature set. Soon I will streamline this with Annotation Processor, and add in plugin abilities to easily tie in the likes of Palette and other libraries as well as refine the API and make it more fluent._
+_This is just they initial feature set. Soon I will streamline this with the Annotation Processor, and add plugin abilities to easily tie in the likes of Palette and other libraries as well as refine the API and make it more fluent._
 
 
 ## License
