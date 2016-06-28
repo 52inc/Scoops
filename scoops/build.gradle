@@ -18,6 +18,11 @@ android {
     }
 
     sourceSets { main { res.srcDirs = ['src/main/res', 'src/androidTest/res'] } }
+
+
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {

@@ -119,7 +119,7 @@ allprojects {
 compile 'com.52inc:scoops:0.2.1-SNAPSHOT'
 ```
 
-### Dynamic color property changing
+# Dynamic color property changing
 
 This is the ability to have a view or attribute update it's color (background, src, text, etc) whenever the user/developer chnages the color for a defined property, or `Topping`. Please refer to [Sample App](https://github.com/52inc/Scoops/tree/feature-dynamic-color-attr/app/src/main/java/com/ftinc/themeenginetest) for actual code references.
 
