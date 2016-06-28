@@ -41,6 +41,9 @@ public class ScoopsActivityTestRule<T extends Activity> extends ActivityTestRule
                 .addFlavor("Alternate 2", R.style.Theme_Scoop_Alt2)
                 .setSharedPreferences(mSharedPrefs)
                 .initialize();
+
+        // Make sure we are set to the default flavor each time
+        Scoop.getInstance().choose(Scoop.getInstance().getFlavors().get(0));
     }
 
     public SharedPreferences getSharedPrefs(){

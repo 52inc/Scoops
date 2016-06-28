@@ -74,12 +74,9 @@ public class ScoopSettingsActivityTest {
     @Test
     public void test_DayNightModeChange(){
 
-        // Select the daynight position item
-        onView(withRecyclerView(R.id.recycler).atPosition(2))
-                .perform(click());
-
-//        onView(withId(R.id.recycler)).perform(
-//                RecyclerViewActions.actionOnItemAtPosition(2, click()));
+//        // Select the daynight position item
+        onView(withId(R.id.recycler)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(2, click()));
 
         onView(withRecyclerView(R.id.recycler).atPositionOnView(2, R.id.opt_auto))
                 .perform(click());

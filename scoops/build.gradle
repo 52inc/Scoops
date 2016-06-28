@@ -33,13 +33,7 @@ dependencies {
     androidTestCompile deps.espresso
     androidTestCompile deps.runner
     androidTestCompile deps.supportAnnotations
-    androidTestCompile (deps.espressoContrib) {
-        // Necessary to avoid version conflicts
-        exclude group: 'com.android.support', module: 'appcompat'
-        exclude group: 'com.android.support', module: 'support-v4'
-        exclude group: 'com.android.support', module: 'support-annotations'
-        exclude module: 'recyclerview-v7'
-    }
+    androidTestCompile deps.espressoContrib
 }
 
 apply from: rootProject.file('gradle/gradle-mvn-push.gradle')
