@@ -5,12 +5,12 @@ Scoops
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.52inc/scoops/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.52inc/scoops) [![Build Status](https://travis-ci.org/52inc/Scoops.svg?branch=master)](https://travis-ci.org/52inc/Scoops)
 
-Scoops is an Android library for managing and applying multiple defined `R.style.Theme....` themes at runtime for dynamically changing the look and feel of your application.
+Android library for managing and applying multiple defined `R.style.Theme....` themes at runtime for dyanically changing the look and feel of your application
 
 ---
 ## Demo
 
-![demo gif](http://i.imgur.com/5SqjbhL.gif)
+![demo gif](http://i.imgur.com/5SqjbhL.gif) ![demo gif 2](http://i.imgur.com/WPTjYUP.gif)
 
 --- 
 ## Installation
@@ -53,7 +53,7 @@ protected void onCreate(Bundle savedInstanceState) {
 }
 ```
 
-You can also use `.applyDialog(...)` to apply the specified dialog theme resource to an activity (to make an activity appear as a dialog with the correct theme).
+You can also use `.applyDialog(...)` to apply the specified dialog theme resource to an activity (to make an activity appear as a dialog with the correct theme)
 
 ### Advanced Use
 
@@ -89,12 +89,12 @@ Then define the attribute in your themes like this:
 </style>
 ```
 
-You can also apply the `toolbarItemTint` color to all the icons in the toolbar by calling `.apply(Context, Menu)`. 
+You can also apply the `toolbarItemTint` color to all the icons in the toolbar by calling `.apply(Context, Menu)` 
 
 	
 ### Settings Menu
 
-This library provides a built-in theme chooser settings screen to use called `ScoopSettingsActivity` that you can use by utilizing one of its static Intent factories:
+This library provides a built in theme chooser settings screen to use called `ScoopSettingsActivity` that you can use by utilizing one of it's static Intent factories:
 
 ```java
 ScoopSettingsActivity.createIntent(Context);
@@ -102,30 +102,31 @@ ScoopSettingsActivity.createIntent(Context, R.string.some_title_to_use);
 ScoopSettingsActivity.createIntent(Context, "Some title to use");
 ```
 
-## Beta
+# Dynamic color property changing
 
-You can access beta by adding these lines to your gradle configuration:
+This is the ability to have a view or attribute update it's color (background, src, text, etc) whenever the user/developer chnages the color for a defined property, or `Topping`. Please refer to [Sample App](https://github.com/52inc/Scoops/tree/feature-dynamic-color-attr/app/src/main/java/com/ftinc/themeenginetest) for actual code references.
+
+## Installation
 
 ```groovy
-allprojects {
+buildscript {
     repositories {
-        jcenter()
-        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+       jcenter()
+    }
+    dependencies {
+	 	...
+    	classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
     }
 }
 ```
 
 ```groovy
-compile 'com.52inc:scoops:0.2.1-SNAPSHOT'
+compile 'com.52inc:scoops:0.3.0'
+apt 'com.52inc:scoops-compiler:0.3.0'
 ```
 
-### Dynamic color property changing
-
-This is the ability to have a view or attribute update it's color (background, src, text, etc) whenever the user/developer chnages the color for a defined property, or `Topping`. Please refer to [Sample App](https://github.com/52inc/Scoops/tree/feature-dynamic-color-attr/app/src/main/java/com/ftinc/themeenginetest) for actual code references.
-
-#### Manual Implementation
-
-For example:
+## Manual Implementation  
+_This does not require the compiler dependency to use._
 
 ```java
 Toolbar mAppBar;
@@ -139,6 +140,12 @@ public void onCreate(Bundle savedInstanceState){
 					 .bindStatusBar(this, Toppings.PRIMARY_DARK);
 }
 
+@Override
+public void onDestroy(){
+	super.onDestroy();
+	Scoop.sugarCone().unbind(this);
+}	
+
 void onSomeEvent(){
 	Scoop.sugarCone().update(Toppings.PRIMARY, someColorInt) 
  					 .update(Toppings.PRIMARY_DARK, someDarkColorInt);
@@ -146,21 +153,26 @@ void onSomeEvent(){
 
 ```
 
-#### Annotated Implementation
-There are two annotations to use to binding views and the like to color properties that can be dynamically updated (i.e. palette, etc) which are `@BindScoop()` and `@BindScoopStatus()`.
+## Annotated Implementation
+There are two annotations to use to binding views and the like to color properties that can be dynamically updated (i.e. palette, etc) which are `@BindTopping()` and `@BindToppingStatus()`.
 
-The former binds a View to a color property and the later binds an activities status bar color to a property.
-For Example:
+### `@BindTopping()`
+This annotation is for binding View's to certain color properties, aka `Topping`, so that when you later update that color property say after running Palette on an image, or for whatever reason, the view you binded will be automatically updated. The topping Id is the value required for the annotation but you can optionally define a `ColorAdapter` (Used to determine how the color change is applied to your View) you want to use and an `Interpolator` to customize the color change animation.
+
+### `@BindToppingStatus()`
+This annotation is used to bind an Activities status bar color to a color property so you can dynamically change the color the window's status bar. Like `@BindTopping()` you can also define an `Interpolator` to use in the animation, however a `ColorAdapter` is not an option here since there is only one way to apply color to a status bar.
+
+### Example
 
 ```java
-@BindScoopStatus(Toppings.PRIMARY_DARK)
+@BindToppingStatus(Toppings.PRIMARY_DARK)
 public class MainActivity extends AppCompatActivity {
 
-    @BindScoop(Toppings.PRIMARY)
+    @BindTopping(Toppings.PRIMARY)
     @BindView(R.id.appbar)
     Toolbar mAppBar;
 
-    @BindScoop(
+    @BindTopping(
             value = Toppings.ACCENT,
             adapter = FABColorAdapter.class,
             interpolator = AccelerateInterpolator.class
@@ -190,10 +202,21 @@ public class MainActivity extends AppCompatActivity {
 }
 ```
 
-Then all properties will automatically update.
+## Snapshot
 
+```groovy
+allprojects {
+    repositories {
+        jcenter()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    }
+}
+```
 
-_This is just they initial feature set. Soon I will streamline this with the Annotation Processor, and add plugin abilities to easily tie in the likes of Palette and other libraries as well as refine the API and make it more fluent._
+```groovy
+compile 'com.52inc:scoops:0.3.1-SNAPSHOT`
+apt `com.52inc:scoops-compiler:0.3.1-SNAPSHOT`
+```
 
 
 ## License

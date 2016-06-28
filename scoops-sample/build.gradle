@@ -1,0 +1,47 @@
+apply plugin: 'com.android.application'
+apply plugin: 'android-apt'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        applicationId "com.ftinc.scoop.example"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+
+    testCompile deps.junit
+    androidTestCompile deps.espresso
+    androidTestCompile deps.runner
+    androidTestCompile deps.supportAnnotations
+
+    compile deps.supportAppCompat
+    compile deps.supportRecyclerView
+    compile deps.supportDesign
+
+    compile deps.butterknife
+    apt deps.butterknifeCompiler
+
+    compile deps.timber
+
+    compile project(':scoops')
+    apt project(':scoops-compiler')
+}
