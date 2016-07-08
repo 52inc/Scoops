@@ -27,10 +27,10 @@ public final class Topping {
     final int id;
 
     @ColorInt
-    int color;
+    int color = 0;
 
     @ColorInt
-    int previousColor;
+    int previousColor = 0;
 
     /***********************************************************************************************
      *

@@ -446,7 +446,16 @@ public class Scoop {
      * @param activity      the activity to bind to
      */
     public void bind(Activity activity){
+        // Get the pre-genereated bindings
         List<IBinding> bindings = getViewBinder(activity).bind(activity);
+
+        // Iterate and verify topping creation and auto-applying
+        for (IBinding binding : bindings) {
+            Topping topping = getOrCreateTopping(binding.getToppingId());
+            if(topping.getColor() != 0){
+                binding.update(topping);
+            }
+        }
 
         // add to system
         Set<IBinding> _bindings = getBindings(activity.getClass());
@@ -546,6 +555,11 @@ public class Scoop {
 
         // Find or Create Topping
         Topping topping = getOrCreateTopping(toppingId);
+
+        // If topping has a color set, auto-apply to binding
+        if(topping.getColor() != 0){
+            binding.update(topping);
+        }
 
         // Store binding
         Set<IBinding> bindings = getBindings(obj.getClass());
