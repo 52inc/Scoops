@@ -1,6 +1,6 @@
 package com.ftinc.scoop.binding;
 
-import com.ftinc.scoop.model.Topping;
+import com.ftinc.scoop.Topping;
 
 /**
  * Project: ThemeEngineTest

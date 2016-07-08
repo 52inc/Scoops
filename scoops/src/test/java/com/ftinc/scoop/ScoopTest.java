@@ -3,8 +3,6 @@ package com.ftinc.scoop;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatDelegate;
 
-import com.ftinc.scoop.model.Flavor;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

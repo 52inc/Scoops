@@ -1,4 +1,4 @@
-package com.ftinc.scoop.model;
+package com.ftinc.scoop;
 
 import android.support.annotation.ColorInt;
 
@@ -16,7 +16,7 @@ import android.support.annotation.ColorInt;
  * Package: com.ftinc.scoop.model
  * Created by drew.heavner on 6/17/16.
  */
-public class Topping {
+public final class Topping {
 
     /***********************************************************************************************
      *
@@ -25,13 +25,12 @@ public class Topping {
      */
 
     final int id;
-    final String name;
 
     @ColorInt
-    int color;
+    int color = 0;
 
     @ColorInt
-    int previousColor;
+    int previousColor = 0;
 
     /***********************************************************************************************
      *
@@ -39,14 +38,8 @@ public class Topping {
      *
      */
 
-    public Topping(int id, String name){
+    Topping(int id){
         this.id = id;
-        this.name = name;
-    }
-
-    public Topping(int id, String name, int defaultColor){
-        this(id, name);
-        color = previousColor = defaultColor;
     }
 
     /***********************************************************************************************
@@ -59,10 +52,6 @@ public class Topping {
         return id;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public int getColor() {
         return color;
     }
@@ -71,7 +60,7 @@ public class Topping {
         return previousColor;
     }
 
-    public void updateColor(@ColorInt int color){
+    void updateColor(@ColorInt int color){
         this.previousColor = this.color;
         this.color = color;
     }
@@ -85,15 +74,13 @@ public class Topping {
 
         if (id != topping.id) return false;
         if (color != topping.color) return false;
-        if (previousColor != topping.previousColor) return false;
-        return name != null ? name.equals(topping.name) : topping.name == null;
+        return previousColor == topping.previousColor;
 
     }
 
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + color;
         result = 31 * result + previousColor;
         return result;
@@ -103,7 +90,6 @@ public class Topping {
     public String toString() {
         return "Topping{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
                 ", color=" + color +
                 ", previousColor=" + previousColor +
                 '}';

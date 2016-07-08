@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ftinc.scoop.Scoop;
-import com.ftinc.scoop.model.Flavor;
+import com.ftinc.scoop.Flavor;
 
 import com.ftinc.scoop.R;
 import com.ftinc.scoop.util.AttrUtils;

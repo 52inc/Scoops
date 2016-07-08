@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
      */
 
     private static final int RC_CHANGE_THEME = 0;
-    private final Random random = new Random();
 
     /***********************************************************************************************
      *
@@ -136,8 +135,8 @@ public class MainActivity extends AppCompatActivity {
         // Bind ButterKnife
         ButterKnife.bind(this);
 
-        // Bind Annotations via Reflection
-        Scoop.sugarCone().bind(this);
+        // Bind Annotations via Code Generation
+        Scoop.getInstance().bind(this);
 
         // Setup Toolbar
         setSupportActionBar(mAppBar);
@@ -145,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        Scoop.sugarCone().unbind(this);
+        Scoop.getInstance().unbind(this);
         super.onDestroy();
     }
 
@@ -196,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
         Button btn = (Button) view;
         int tintColor = btn.getBackgroundTintList().getDefaultColor();
 
-        Scoop.sugarCone()
+        Scoop.getInstance()
                 .update(Toppings.PRIMARY, tintColor);
     }
 
@@ -212,7 +211,7 @@ public class MainActivity extends AppCompatActivity {
         Button btn = (Button) view;
         int tintColor = btn.getBackgroundTintList().getDefaultColor();
 
-        Scoop.sugarCone()
+        Scoop.getInstance()
                 .update(Toppings.PRIMARY_DARK, tintColor);
     }
 
@@ -228,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
         Button btn = (Button) view;
         int tintColor = btn.getBackgroundTintList().getDefaultColor();
 
-        Scoop.sugarCone()
+        Scoop.getInstance()
                 .update(Toppings.ACCENT, tintColor);
     }
 

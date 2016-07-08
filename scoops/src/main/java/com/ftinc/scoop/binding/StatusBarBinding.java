@@ -6,7 +6,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.RequiresApi;
 import android.view.animation.Interpolator;
 
-import com.ftinc.scoop.model.Topping;
+import com.ftinc.scoop.Topping;
 
 /**
  * Project: ThemeEngineTest

@@ -15,7 +15,6 @@ import com.ftinc.scoop.binding.StatusBarBinding;
 import com.ftinc.scoop.binding.ViewBinding;
 import com.ftinc.scoop.adapters.ColorAdapter;
 import com.ftinc.scoop.internal.ToppingBinder;
-import com.ftinc.scoop.model.Topping;
 import com.ftinc.scoop.util.BindingUtils;
 
 import java.security.InvalidParameterException;
@@ -30,14 +29,12 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * This class represents the management of individual coloring attributes as to update element colors
- * without having to rebuild the entire activity.
- *
- * I.E. Say if you want to interpolate the colors based on an image loading and then using palette
+ * This class is not deprecated, please use {@link Scoop} class to bind everything
  *
  * Package: com.ftinc.scoop
  * Created by drew.heavner on 6/17/16.
  */
+@Deprecated
 public class SugarCone {
     private static final String TAG = "SugarCone";
 
@@ -49,8 +46,6 @@ public class SugarCone {
         }
     };
 
-    private static boolean debug = false;
-
     /***********************************************************************************************
      *
      * Variables
@@ -60,15 +55,13 @@ public class SugarCone {
     private SparseArray<Topping> mToppings = new SparseArray<>();
     private HashMap<Class, Set<IBinding>> mBindings = new HashMap<>();
 
+    private static boolean debug = false;
+
     /***********************************************************************************************
      *
      * Api Methods
      *
      */
-
-    public void setDebug(boolean flag){
-        SugarCone.debug = flag;
-    }
 
     public void bind(Activity activity){
         List<IBinding> bindings = getViewBinder(activity).bind(activity);
