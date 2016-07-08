@@ -18,7 +18,7 @@ Android library for managing and applying multiple defined `R.style.Theme....` t
 Add this line to your gradle/dependencies group:
 
 ```groovy
-compile 'com.52inc:scoops:0.1.0'
+compile 'com.52inc:scoops:1.0.0'
 ```
 
 Then you will need to initialize the singleton in your `Application` subclass like this:
@@ -121,8 +121,8 @@ buildscript {
 ```
 
 ```groovy
-compile 'com.52inc:scoops:0.3.0'
-apt 'com.52inc:scoops-compiler:0.3.0'
+compile 'com.52inc:scoops:1.0.0'
+apt 'com.52inc:scoops-compiler:1.0.0'
 ```
 
 ## Manual Implementation  
@@ -136,18 +136,18 @@ public void onCreate(Bundle savedInstanceState){
 	super.onCreate(savedInstanceState);
 	setContentView(R.layout.some_layout);
 	
-	Scoop.sugarCone().bind(this, Toppings.PRIMARY, mAppBar)
+	Scoop.getInstance().bind(this, Toppings.PRIMARY, mAppBar)
 					 .bindStatusBar(this, Toppings.PRIMARY_DARK);
 }
 
 @Override
 public void onDestroy(){
 	super.onDestroy();
-	Scoop.sugarCone().unbind(this);
+	Scoop.getInstance().unbind(this);
 }	
 
 void onSomeEvent(){
-	Scoop.sugarCone().update(Toppings.PRIMARY, someColorInt) 
+	Scoop.getInstance().update(Toppings.PRIMARY, someColorInt) 
  					 .update(Toppings.PRIMARY_DARK, someDarkColorInt);
 }
 
@@ -189,14 +189,14 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         // Bind Scoops
-        Scoop.sugarCone().bind(this);
+        Scoop.getInstance().bind(this);
 		
 		...
     }
 
     @Override
     protected void onDestroy() {
-        Scoop.sugarCone().unbind(this);
+        Scoop.getInstance().unbind(this);
         super.onDestroy();
     }
 }
@@ -214,8 +214,8 @@ allprojects {
 ```
 
 ```groovy
-compile 'com.52inc:scoops:0.3.1-SNAPSHOT`
-apt `com.52inc:scoops-compiler:0.3.1-SNAPSHOT`
+compile 'com.52inc:scoops:1.0.1-SNAPSHOT`
+apt `com.52inc:scoops-compiler:1.0.1-SNAPSHOT`
 ```
 
 
