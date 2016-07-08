@@ -1,4 +1,4 @@
-package com.ftinc.scoop.model;
+package com.ftinc.scoop;
 
 import android.support.annotation.StyleRes;
 

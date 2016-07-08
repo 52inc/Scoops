@@ -1,4 +1,6 @@
-package com.ftinc.scoop.model;
+package com.ftinc.scoop;
+
+import com.ftinc.scoop.Flavor;
 
 import org.junit.Before;
 import org.junit.Test;

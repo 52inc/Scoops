@@ -1,9 +1,7 @@
 package com.ftinc.scoop.ui;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
@@ -17,8 +15,7 @@ import android.view.View;
 
 import com.ftinc.scoop.R;
 import com.ftinc.scoop.Scoop;
-import com.ftinc.scoop.model.Flavor;
-import com.ftinc.scoop.util.AttrUtils;
+import com.ftinc.scoop.Flavor;
 
 /**
  * Project: ThemeEngineTest
