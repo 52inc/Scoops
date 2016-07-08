@@ -25,15 +25,13 @@ public abstract class AnimatedBinding extends IBinding {
         mInterpolator = interpolator;
     }
 
-    @Override
-    public void update(Topping topping) {
-
+    public void update(Topping topping, boolean animate){
         int fromColor = topping.getPreviousColor() != 0 ?
                 topping.getPreviousColor() : getCurrentColor() != 0 ?
                 getCurrentColor() : Color.WHITE;
         int toColor = topping.getColor();
 
-        if (fromColor != toColor) {
+        if (fromColor != toColor && animate) {
 
             if (mAnimator != null) {
                 mAnimator.cancel();
@@ -63,6 +61,11 @@ public abstract class AnimatedBinding extends IBinding {
         } else {
             applyColor(toColor);
         }
+    }
+
+    @Override
+    public void update(Topping topping) {
+        update(topping, true);
     }
 
     @Override

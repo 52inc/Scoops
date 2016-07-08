@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.animation.Interpolator;
 
 import com.ftinc.scoop.adapters.ColorAdapter;
+import com.ftinc.scoop.binding.AnimatedBinding;
 import com.ftinc.scoop.binding.IBinding;
 import com.ftinc.scoop.binding.StatusBarBinding;
 import com.ftinc.scoop.binding.ViewBinding;
@@ -290,6 +291,16 @@ public class Scoop {
         return topping;
     }
 
+    private void autoUpdateBinding(IBinding binding, Topping topping){
+        if(topping.getColor() != 0) {
+            if (binding instanceof AnimatedBinding) {
+                ((AnimatedBinding) binding).update(topping, false);
+            } else {
+                binding.update(topping);
+            }
+        }
+    }
+
     /***********************************************************************************************
      *
      * Public Methods
@@ -452,9 +463,7 @@ public class Scoop {
         // Iterate and verify topping creation and auto-applying
         for (IBinding binding : bindings) {
             Topping topping = getOrCreateTopping(binding.getToppingId());
-            if(topping.getColor() != 0){
-                binding.update(topping);
-            }
+            autoUpdateBinding(binding, topping);
         }
 
         // add to system
@@ -557,9 +566,7 @@ public class Scoop {
         Topping topping = getOrCreateTopping(toppingId);
 
         // If topping has a color set, auto-apply to binding
-        if(topping.getColor() != 0){
-            binding.update(topping);
-        }
+        autoUpdateBinding(binding, topping);
 
         // Store binding
         Set<IBinding> bindings = getBindings(obj.getClass());

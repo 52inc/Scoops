@@ -15,7 +15,7 @@ import java.util.List;
 final class FieldViewBinding extends Binding{
     private static final ClassName VIEW_BINDING = ClassName.get("com.ftinc.scoop.binding", "ViewBinding");
     private static final ClassName BINDING_UTILS = ClassName.get("com.ftinc.scoop.util", "BindingUtils");
-    private static final ClassName NO_ADAPTER = ClassName.get("com.ftinc.scoop.BindScoop", "NONE");
+    private static final ClassName NO_ADAPTER = ClassName.get("com.ftinc.scoop.BindTopping", "NONE");
 
     private final String name;
     private final ClassName adapter;
