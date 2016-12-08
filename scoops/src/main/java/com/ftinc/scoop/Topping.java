@@ -20,6 +20,16 @@ public final class Topping {
 
     /***********************************************************************************************
      *
+     * DEFAULT FLAVORS
+     *
+     */
+
+    public static final int PRIMARY = 0;
+    public static final int PRIMARY_DARK = 1;
+    public static final int ACCENT = 2;
+
+    /***********************************************************************************************
+     *
      * Variables
      *
      */
