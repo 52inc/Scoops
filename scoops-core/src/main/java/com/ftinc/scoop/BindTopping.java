@@ -37,6 +37,12 @@ public @interface BindTopping {
     Class<? extends ColorAdapter<? extends View>> adapter() default NONE.class;
 
     /**
+     * OPTIONAL
+     * The duration of the animation
+     */
+    long duration() default -1;
+
+    /**
      * Dummy empty adapter for default value
      */
     class NONE implements ColorAdapter<View> {

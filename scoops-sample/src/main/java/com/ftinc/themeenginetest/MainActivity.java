@@ -37,7 +37,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-@BindToppingStatus(Toppings.PRIMARY_DARK)
+@BindToppingStatus(value = Toppings.PRIMARY_DARK, duration = 300L)
 public class MainActivity extends AppCompatActivity {
 
     /***********************************************************************************************

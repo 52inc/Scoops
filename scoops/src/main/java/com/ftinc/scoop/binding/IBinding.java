@@ -10,7 +10,7 @@ import com.ftinc.scoop.Topping;
 
 public abstract class IBinding {
 
-    protected static final long DEFAULT_ANIMATION_DURATION = 600L;
+    public static final long DEFAULT_ANIMATION_DURATION = 600L;
 
     protected int toppingId;
 

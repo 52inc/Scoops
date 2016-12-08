@@ -19,10 +19,16 @@ public abstract class AnimatedBinding extends IBinding {
 
     private ValueAnimator mAnimator;
     private Interpolator mInterpolator;
+    private long duration;
 
     public AnimatedBinding(int toppingId, Interpolator interpolator) {
+        this(toppingId, interpolator, DEFAULT_ANIMATION_DURATION);
+    }
+
+    public AnimatedBinding(int toppingId, Interpolator mInterpolator, long duration) {
         super(toppingId);
-        mInterpolator = interpolator;
+        this.mInterpolator = mInterpolator;
+        this.duration = duration;
     }
 
     public void update(Topping topping, boolean animate){
@@ -40,10 +46,10 @@ public abstract class AnimatedBinding extends IBinding {
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 mAnimator = ValueAnimator.ofArgb(fromColor, toColor)
-                        .setDuration(DEFAULT_ANIMATION_DURATION);
+                        .setDuration(duration);
             } else {
                 mAnimator = ValueAnimator.ofInt(fromColor, toColor)
-                        .setDuration(DEFAULT_ANIMATION_DURATION);
+                        .setDuration(duration);
                 mAnimator.setEvaluator(new ArgbEvaluator());
             }
 

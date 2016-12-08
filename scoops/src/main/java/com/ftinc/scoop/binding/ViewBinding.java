@@ -26,6 +26,16 @@ public class ViewBinding extends AnimatedBinding{
         mColorAdapter = adapter;
     }
 
+    public ViewBinding(int toppingId,
+                       @NonNull View view,
+                       @NonNull ColorAdapter adapter,
+                       @Nullable Interpolator interpolator,
+                       long duration){
+        super(toppingId, interpolator, duration);
+        mView = view;
+        mColorAdapter = adapter;
+    }
+
     @Override
     public void unbind() {
         mView = null;

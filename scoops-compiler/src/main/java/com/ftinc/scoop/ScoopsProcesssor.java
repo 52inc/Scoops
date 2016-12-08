@@ -158,7 +158,7 @@ public final class ScoopsProcesssor extends AbstractProcessor{
         ClassName adapter = className(asTypeElement(getAdapterTypeMirror(annotation)));
         ClassName interpolator = className(asTypeElement(getInterpolatorTypeMirror(annotation)));
 
-        FieldViewBinding binding = new FieldViewBinding(annotation.value(), name, adapter, interpolator);
+        FieldViewBinding binding = new FieldViewBinding(annotation.value(), name, adapter, interpolator, annotation.duration());
         bindingClass.addViewBinding(binding);
 
     }
@@ -196,7 +196,7 @@ public final class ScoopsProcesssor extends AbstractProcessor{
 
             ClassName interpolator = className(asTypeElement(getInterpolatorTypeMirror(annotation)));
 
-            ClassStatusBarBinding binding = new ClassStatusBarBinding(annotation.value(), interpolator);
+            ClassStatusBarBinding binding = new ClassStatusBarBinding(annotation.value(), interpolator, annotation.duration());
             bindingClass.setStatusBarBinding(binding);
         }
 

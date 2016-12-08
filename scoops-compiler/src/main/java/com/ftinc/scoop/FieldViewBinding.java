@@ -14,21 +14,25 @@ import java.util.List;
  */
 final class FieldViewBinding extends Binding{
     private static final ClassName VIEW_BINDING = ClassName.get("com.ftinc.scoop.binding", "ViewBinding");
+    private static final ClassName IBINDING = ClassName.get("com.ftinc.scoop.binding", "IBinding");
     private static final ClassName BINDING_UTILS = ClassName.get("com.ftinc.scoop.util", "BindingUtils");
     private static final ClassName NO_ADAPTER = ClassName.get("com.ftinc.scoop.BindTopping", "NONE");
 
     private final String name;
     private final ClassName adapter;
     private final ClassName interpolator;
+    private final long duration;
 
     public FieldViewBinding(int id,
                             String name,
                             ClassName adapter,
-                            ClassName interpolator) {
+                            ClassName interpolator,
+                            long duration) {
         super(id);
         this.name = name;
         this.adapter = adapter;
         this.interpolator = interpolator;
+        this.duration = duration;
     }
 
     @Override
@@ -45,6 +49,8 @@ final class FieldViewBinding extends Binding{
         } else {
             builder.append(", null");
         }
+
+        builder.append(", $L");
         builder.append("));");
         return builder.toString();
     }
@@ -66,6 +72,8 @@ final class FieldViewBinding extends Binding{
         if(interpolator != null){
             args.add(interpolator);
         }
+
+        args.add(duration == -1 ? IBINDING.toString().concat(".DEFAULT_ANIMATION_DURATION") : duration);
 
         return args.toArray();
     }

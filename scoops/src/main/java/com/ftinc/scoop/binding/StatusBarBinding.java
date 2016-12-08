@@ -24,6 +24,12 @@ public class StatusBarBinding extends AnimatedBinding {
         mActivity = activity;
     }
 
+
+    public StatusBarBinding(int toppingId, Activity activity, Interpolator interpolator, long duration) {
+        super(toppingId, interpolator, duration);
+        mActivity = activity;
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void update(Topping topping) {

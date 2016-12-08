@@ -24,4 +24,9 @@ public @interface BindToppingStatus {
      * The Interpolator to use when changing color properties on views
      */
     Class<? extends Interpolator> interpolator() default LinearInterpolator.class;
+
+    /**
+     * The duration for the animation, default is 600ms
+     */
+    long duration() default -1;
 }
